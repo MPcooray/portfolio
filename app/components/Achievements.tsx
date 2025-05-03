@@ -20,6 +20,7 @@ export default function Achievements() {
   ]
 
   const leadershipAchievements = [
+    "Captain (2025-Present): SLIIT Swimming Team",
     "Vice Captain (2024): SLIIT Swimming Team",
     "Junior Vice Captain (2019) and Captain (2020): Ananda College Swimming Team"
   ]
