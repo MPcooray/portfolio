@@ -2,11 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 export default function Hero() {
-  const router = useRouter()
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
