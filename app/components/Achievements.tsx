@@ -19,13 +19,14 @@ export default function Achievements() {
   ]
 
   const leadershipAchievements = [
+    "Sport Council President (2025-Present): SLIIT",
     "Captain (2025-Present): SLIIT Swimming Team",
     "Vice Captain (2024): SLIIT Swimming Team",
     "Junior Vice Captain (2019) and Captain (2020): Ananda College Swimming Team",
   ]
 
   return (
-    <section ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
+    <section id="achievements" ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
       {/* Single swimming photo background */}
       <div className="absolute inset-0 w-full h-full">
         <motion.div

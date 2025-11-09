@@ -38,7 +38,7 @@ const projects = [
     title: 'Early Accident Detection System',
     description: 'Innovative Safety Solution (2024)',
     details: 'Details to be added.',
-    techStack: ['Python', 'OpenCV', 'TensorFlow', 'React'],
+    techStack: ['C++', 'ESP32', 'React'],
     features: [
       'Real-time accident detection',
       'Alert system',

@@ -12,7 +12,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

@@ -29,7 +29,7 @@ export default function About() {
   const categories = [...new Set(skills.map(skill => skill.category))]
 
   return (
-    <section ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
+    <section id="about" ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900/20 to-gray-900" />
 
@@ -88,6 +88,11 @@ export default function About() {
                 <h4 className="text-xl font-semibold text-white mb-2">BSc (Hons) in Computer Science</h4>
                 <p className="text-gray-300">Sri Lanka Institute of Information Technology (SLIIT)</p>
                 <p className="text-blue-400">2023–2027</p>
+              </div>
+              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
+                <h4 className="text-xl font-semibold text-white mb-2">MSc in Artificial Intelligence</h4>
+                <p className="text-gray-300">Angalia Ruskin University</p>
+                <p className="text-blue-400">2025 Sep–2026 Sep</p>
               </div>
               <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
                 <h4 className="text-xl font-semibold text-white mb-2">BEng (Hons) in Electrical and Electronic Engineering</h4>
