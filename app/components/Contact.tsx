@@ -33,8 +33,9 @@ export default function Contact() {
           email: '',
           message: ''
         })
-      }, (error) => {
-        console.error('Error sending email:', error.text)
+      }, (error: any) => {
+        const errorMessage = error?.text || error?.message || 'Unknown error'
+        console.error('Error sending email:', errorMessage)
         alert('Failed to send message. Please try again.')
       })
   }
@@ -119,7 +120,7 @@ export default function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" suppressHydrationWarning>
               <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20">
                 <div className="space-y-4">
                   <div>
@@ -134,6 +135,7 @@ export default function Contact() {
                       onChange={handleChange}
                       className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                   <div>
@@ -148,6 +150,7 @@ export default function Contact() {
                       onChange={handleChange}
                       className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                   <div>
@@ -162,6 +165,7 @@ export default function Contact() {
                       rows={4}
                       className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors resize-none"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                 </div>

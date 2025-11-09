@@ -45,10 +45,22 @@ export function MouseGlow() {
         transform: 'translate(-50%, -50%)',
       }}
       initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 0.3 }}
+      animate={{ scale: 1, opacity: 0.4 }}
       transition={{ type: 'spring', stiffness: 150, damping: 15 }}
     >
-      <div className="w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl" />
+      <div className="w-96 h-96 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-3xl" />
+      <motion.div
+        className="absolute inset-0 w-64 h-64 bg-blue-400/20 rounded-full blur-2xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
     </motion.div>
   )
 }
@@ -126,25 +138,28 @@ export function MagneticButton({ children, className, ...props }: any) {
   )
 }
 
-// Tilt card effect
+// Tilt card effect with enhanced 3D
 export function TiltCard({ children, className, ...props }: any) {
   const [rotateX, setRotateX] = useState(0)
   const [rotateY, setRotateY] = useState(0)
+  const [scale, setScale] = useState(1)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
-    const rotateXValue = (e.clientY - centerY) / 10
-    const rotateYValue = (centerX - e.clientX) / 10
+    const rotateXValue = (e.clientY - centerY) / 8
+    const rotateYValue = (centerX - e.clientX) / 8
 
     setRotateX(rotateXValue)
     setRotateY(rotateYValue)
+    setScale(1.05)
   }
 
   const handleMouseLeave = () => {
     setRotateX(0)
     setRotateY(0)
+    setScale(1)
   }
 
   return (
@@ -152,9 +167,17 @@ export function TiltCard({ children, className, ...props }: any) {
       className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ rotateX, rotateY }}
+      animate={{ 
+        rotateX, 
+        rotateY,
+        scale,
+        z: scale > 1 ? 20 : 0
+      }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      style={{ transformStyle: 'preserve-3d' }}
+      style={{ 
+        transformStyle: 'preserve-3d',
+        perspective: '1000px'
+      }}
       {...props}
     >
       {children}

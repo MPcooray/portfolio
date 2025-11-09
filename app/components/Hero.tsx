@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Lightning3D from './Lightning3D'
+import LightningEffect from './LightningEffect'
 import { MagneticButton } from './InteractiveEffects'
 
 export default function Hero() {
@@ -15,9 +15,9 @@ export default function Hero() {
 
   return (
     <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-      {/* 3D Lightning Effects */}
-      <div className="absolute inset-0 w-full h-full opacity-60 z-0">
-        <Lightning3D />
+      {/* Lightning Effects */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <LightningEffect />
       </div>
       
       {/* Animated background elements */}
@@ -36,7 +36,58 @@ export default function Hero() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-3xl" />
         </motion.div>
+        
+        {/* Additional animated orbs */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.4, 1],
+            x: [0, -40, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
       </div>
+      
+      {/* Animated stars */}
+      {Array.from({ length: 50 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-white rounded-full"
+          style={{
+            left: `${(i * 7) % 100}%`,
+            top: `${(i * 11) % 100}%`,
+          }}
+          animate={{
+            opacity: [0.2, 1, 0.2],
+            scale: [0.5, 1.5, 0.5],
+          }}
+          transition={{
+            duration: 2 + (i % 3),
+            repeat: Infinity,
+            delay: i * 0.1,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
@@ -104,15 +155,24 @@ export default function Hero() {
           >
             <motion.div
               className="relative w-80 h-80 md:w-96 md:h-96 mx-auto"
-              whileHover={{ scale: 1.05, rotate: 3 }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.1, rotate: 5, y: -10 }}
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                y: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                default: { duration: 0.3, type: "spring", stiffness: 300 }
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-2xl opacity-50 animate-pulse" />
               <Image
                 src="/me2.jpg"
                 alt="Manula Cooray"
                 fill
-                className="rounded-full object-cover border-4 border-blue-500/20"
+                className="rounded-full object-cover"
                 priority
               />
             </motion.div>
@@ -144,4 +204,3 @@ export default function Hero() {
     </section>
   )
 }
-
