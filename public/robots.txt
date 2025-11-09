@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://manulacooray.com
+
+# Sitemaps
+Sitemap: https://manulacooray.com/sitemap.xml
