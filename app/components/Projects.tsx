@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { TiltCard } from './InteractiveEffects'
 
 const projects = [
   {
@@ -95,9 +96,9 @@ export default function Projects() {
         <h2 className="text-4xl font-bold mb-12 text-center text-white">My Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <motion.div
+            <TiltCard
               key={project.id}
-              className="bg-gray-800 rounded-lg p-6 hover:shadow-lg transition-all cursor-pointer hover:scale-105 hover:bg-gray-700"
+              className="bg-gray-800 rounded-lg p-6 hover:shadow-lg transition-all cursor-pointer hover:scale-105 hover:bg-gray-700 border border-gray-700 hover:border-blue-500/50 relative overflow-hidden group"
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -116,7 +117,11 @@ export default function Projects() {
                   <span className="text-sm text-gray-400">+{project.techStack.length - 3} more</span>
                 )}
               </div>
-            </motion.div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                initial={false}
+              />
+            </TiltCard>
           ))}
         </div>
 

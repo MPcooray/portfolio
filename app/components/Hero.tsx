@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Lightning3D from './Lightning3D'
+import { MagneticButton } from './InteractiveEffects'
 
 export default function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -13,6 +15,11 @@ export default function Hero() {
 
   return (
     <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      {/* 3D Lightning Effects */}
+      <div className="absolute inset-0 w-full h-full opacity-60 z-0">
+        <Lightning3D />
+      </div>
+      
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -65,22 +72,26 @@ export default function Hero() {
               transition={{ delay: 1.5 }}
               className="flex flex-wrap gap-4 justify-center md:justify-start"
             >
-              <motion.button
+              <MagneticButton
                 onClick={() => scrollToSection('projects')}
-                className="px-8 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors relative overflow-hidden group"
               >
-                View Projects
-              </motion.button>
-              <motion.button
+                <span className="relative z-10">View Projects</span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                  initial={false}
+                />
+              </MagneticButton>
+              <MagneticButton
                 onClick={() => scrollToSection('contact')}
-                className="px-8 py-3 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500/10 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500/10 transition-colors relative overflow-hidden group"
               >
-                Contact Me
-              </motion.button>
+                <span className="relative z-10">Contact Me</span>
+                <motion.div
+                  className="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                  initial={false}
+                />
+              </MagneticButton>
             </motion.div>
           </motion.div>
 
