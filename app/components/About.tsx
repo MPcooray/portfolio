@@ -1,149 +1,153 @@
 'use client'
 
-import React from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import Image from 'next/image'
+
+const pillars = [
+  {
+    title: 'Systems thinking',
+    text: 'I enjoy turning moving parts into dependable systems, whether that means backend logic, embedded workflows, or product structure.',
+  },
+  {
+    title: 'Competitive discipline',
+    text: 'Swimming taught me consistency, composure under pressure, and how daily standards shape long-term performance.',
+  },
+  {
+    title: 'Leadership in motion',
+    text: 'From sport council work to captaining teams, I like building momentum around people, not just around tasks.',
+  },
+]
+
+const journey = [
+  {
+    period: '2023 - Present',
+    title: 'BSc (Hons) in Computer Science',
+    place: 'Sri Lanka Institute of Information Technology (SLIIT)',
+  },
+  {
+    period: '2024 - 2025',
+    title: 'BEng (Hons) in Electrical and Electronic Engineering',
+    place: 'University of the West of England',
+  },
+  {
+    period: '2025 - 2026',
+    title: 'MSc in Artificial Intelligence',
+    place: 'Anglia Ruskin University',
+  },
+]
+
+const capabilities = [
+  'C / C++',
+  'Java',
+  'React / Next.js',
+  'PostgreSQL / MySQL',
+  'Embedded systems',
+  'Problem solving',
+  'Digital communication',
+  'Team leadership',
+]
 
 export default function About() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  const skills = [
-    { name: 'C', category: 'Programming' },
-    { name: 'C++', category: 'Programming' },
-    { name: 'Java', category: 'Programming' },
-    { name: 'MySQL', category: 'Database' },
-    { name: 'PostgreSQL', category: 'Database' },
-    { name: 'HTML', category: 'Web' },
-    { name: 'CSS', category: 'Web' },
-    { name: 'Creativity', category: 'Soft Skills' },
-    { name: 'Digital Marketing', category: 'Soft Skills' },
-    { name: 'Negotiation', category: 'Soft Skills' },
-    { name: 'Critical Thinking', category: 'Soft Skills' },
-    { name: 'Leadership', category: 'Soft Skills' }
-  ]
-
-  const categories = [...new Set(skills.map(skill => skill.category))]
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 })
 
   return (
-    <section id="about" ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900/20 to-gray-900" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="max-w-6xl mx-auto px-4 relative z-10"
-      >
-        <h2 className="text-4xl font-bold mb-12 text-white text-center">
-          About Me
-          <div className="w-24 h-1 bg-blue-400 mx-auto mt-4 rounded-full" />
-        </h2>
-
-        <div className="flex flex-col md:flex-row gap-12 mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="md:w-1/3"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur-2xl opacity-50 animate-pulse" />
-              <Image
-                src="/me.jpg"
-                width={300}
-                height={300}
-                alt="Manula Cooray"
-                className="rounded-lg shadow-lg mx-auto relative z-10 border-4 border-blue-500/20 object-cover"
-                priority
-              />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="md:w-2/3"
-          >
-            <p className="text-gray-300 leading-relaxed mb-8 text-lg">
-              I am an enthusiastic and driven Computer Science and Electrical & Electronics Engineering student with a passion for turning innovative ideas into reality. An extrovert by nature, I thrive in dynamic environments that challenge my problem-solving skills and push me to learn and grow. I value integrity, teamwork, and hard work, and I&apos;m always on the lookout for opportunities to make an impact through technology. Whether it's designing complex systems, tackling tough challenges, or leading a team to success, I approach every endeavor with curiosity and determination.
+    <section id="about" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65 }}
+          className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]"
+        >
+          <div className="space-y-6">
+            <span className="eyebrow">Profile</span>
+            <h2 className="section-title text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
+              Calm execution, ambitious direction.
+            </h2>
+            <p className="max-w-xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+              My work is shaped by two worlds that demand precision: engineering and performance
+              sport. I care about building reliable systems, communicating clearly, and showing up
+              with consistency when pressure is high.
             </p>
-          </motion.div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <h3 className="text-2xl font-semibold mb-6 text-blue-400">Education</h3>
-            <div className="space-y-6">
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                <h4 className="text-xl font-semibold text-white mb-2">BSc (Hons) in Computer Science</h4>
-                <p className="text-gray-300">Sri Lanka Institute of Information Technology (SLIIT)</p>
-                <p className="text-blue-400">2023–2027</p>
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                <h4 className="text-xl font-semibold text-white mb-2">MSc in Artificial Intelligence</h4>
-                <p className="text-gray-300">Angalia Ruskin University</p>
-                <p className="text-blue-400">2025 Sep–2026 Sep</p>
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                <h4 className="text-xl font-semibold text-white mb-2">BEng (Hons) in Electrical and Electronic Engineering</h4>
-                <p className="text-gray-300">University of the West of England</p>
-                <p className="text-blue-400">2024–2025</p>
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                <h4 className="text-xl font-semibold text-white mb-2">Higher Diploma in Engineering Technology</h4>
-                <p className="text-gray-300">University of the West of England</p>
-                <p className="text-blue-400">2023–2024</p>
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                <h4 className="text-xl font-semibold text-white mb-2">G.C.E. Advanced Level Examination</h4>
-                <p className="text-gray-300">Ananda College, Colombo 10</p>
-                <p className="text-blue-400">2008–2022</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <h3 className="text-2xl font-semibold mb-6 text-blue-400">Skills</h3>
-            <div className="space-y-6">
-              {categories.map((category, index) => (
-                <div key={category} className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20">
-                  <h4 className="text-xl font-semibold text-white mb-4">{category}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills
-                      .filter(skill => skill.category === category)
-                      .map((skill, i) => (
-                        <motion.span
-                          key={skill.name}
-                          initial={{ opacity: 0, scale: 0.5 }}
-                          animate={inView ? { opacity: 1, scale: 1 } : {}}
-                          transition={{ duration: 0.5, delay: 0.1 * i }}
-                          className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm"
-                        >
-                          {skill.name}
-                        </motion.span>
-                      ))}
-                  </div>
-                </div>
+            <div className="grid gap-4">
+              {pillars.map((pillar, index) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, x: -24 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.45, delay: 0.12 * index }}
+                  className="glass-panel rounded-[1.5rem] p-5"
+                >
+                  <p className="text-sm uppercase tracking-[0.22em] text-[color:var(--accent)]">
+                    {pillar.title}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">{pillar.text}</p>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
-      </motion.div>
+          </div>
+
+          <div className="grid gap-6">
+            <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                    Academic route
+                  </p>
+                  <h3 className="mt-3 text-2xl font-semibold text-[color:var(--text)]">
+                    Cross-disciplinary by design
+                  </h3>
+                </div>
+                <p className="max-w-sm text-sm leading-7 text-[color:var(--muted)]">
+                  I&apos;m intentionally combining computing, electronics, and AI to build a broad but
+                  practical technical foundation.
+                </p>
+              </div>
+
+              <div className="mt-8 space-y-5">
+                {journey.map((item, index) => (
+                  <motion.div
+                    key={`${item.title}-${item.period}`}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.45, delay: 0.14 * index }}
+                    className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5"
+                  >
+                    <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                      {item.period}
+                    </p>
+                    <h4 className="mt-2 text-lg font-semibold text-[color:var(--text)]">
+                      {item.title}
+                    </h4>
+                    <p className="mt-2 text-sm leading-7 text-[color:var(--muted)]">{item.place}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="text-2xl font-semibold text-[color:var(--text)]">
+                  Tools and strengths
+                </h3>
+                <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                  Built for teams and systems
+                </p>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {capabilities.map((capability) => (
+                  <span
+                    key={capability}
+                    className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
+                  >
+                    {capability}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   )
 }
-

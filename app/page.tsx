@@ -6,7 +6,7 @@ import Contact from './components/Contact'
 
 export default function Home() {
   return (
-    <main className="bg-gray-900">
+    <main className="relative">
       <Hero />
       <About />
       <Projects />
@@ -15,4 +15,3 @@ export default function Home() {
     </main>
   )
 }
-

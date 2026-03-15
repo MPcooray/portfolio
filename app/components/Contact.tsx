@@ -3,187 +3,165 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
-import emailjs from '@emailjs/browser'
+
+const details = [
+  { label: 'Email', value: 'manulacooray@gmail.com', href: 'mailto:manulacooray@gmail.com' },
+  { label: 'Phone', value: '+94 70 255 7227', href: 'tel:+94702557227' },
+  {
+    label: 'LinkedIn',
+    value: 'View LinkedIn profile',
+    note: '@manula-cooray-b5bb862b2',
+    href: 'https://www.linkedin.com/in/manula-cooray-b5bb862b2/',
+  },
+  { label: 'Languages', value: 'English / Sinhala' },
+]
 
 export default function Contact() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 })
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    const serviceId = 'service_coio5dg'
+    const templateId = 'template_e8emuyj'
+    const publicKey = 'ZezWzT3g_XSdTUnxx'
 
-    const serviceId = 'service_coio5dg' // Replace with your Service ID
-    const templateId = 'template_e8emuyj' // Replace with your Template ID
-    const publicKey = 'ZezWzT3g_XSdTUnxx' // Replace with your Public Key
-
-    emailjs.sendForm(serviceId, templateId, e.currentTarget as HTMLFormElement, publicKey)
-      .then((result) => {
-        console.log('Email sent successfully!', result.text)
-        alert('Your message has been sent!')
-        setFormData({
-          name: '',
-          email: '',
-          message: ''
-        })
-      }, (error: any) => {
-        const errorMessage = error?.text || error?.message || 'Unknown error'
-        console.error('Error sending email:', errorMessage)
-        alert('Failed to send message. Please try again.')
-      })
+    try {
+      const emailjs = (await import('@emailjs/browser')).default
+      await emailjs.sendForm(serviceId, templateId, event.currentTarget, publicKey)
+      alert('Your message has been sent.')
+      setFormData({ name: '', email: '', message: '' })
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      console.error('Email send failed:', message)
+      alert('Message failed to send. Please try again.')
+    }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target
+    setFormData((previous) => ({ ...previous, [name]: value }))
   }
 
   return (
-    <section id="contact" ref={ref} className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900/20 to-gray-900" />
-
-      <motion.div
-        className="max-w-4xl mx-auto px-4 relative z-10"
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="text-4xl font-bold mb-12 text-center text-white">
-          Get in Touch
-          <div className="w-24 h-1 bg-blue-400 mx-auto mt-4 rounded-full" />
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-12">
+    <section id="contact" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 28 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55 }}
+            className="glass-panel rounded-[2rem] p-8"
           >
-            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20">
-              <h3 className="text-2xl font-semibold mb-6 text-blue-400">Contact Information</h3>
-              <div className="space-y-4">
-                <motion.a
-                  href="mailto:manulacooray@gmail.com"
-                  className="flex items-center text-gray-300 hover:text-blue-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <span className="mr-3 text-blue-400 group-hover:scale-110 transition-transform">📧</span>
-                  manulacooray@gmail.com
-                </motion.a>
-                <motion.p
-                  className="flex items-center text-gray-300 group"
-                  whileHover={{ x: 5 }}
-                >
-                  <span className="mr-3 text-blue-400 group-hover:scale-110 transition-transform">📞</span>
-                  +94 70 255 7227
-                </motion.p>
-                <motion.p
-                  className="flex items-start text-gray-300 group"
-                  whileHover={{ x: 5 }}
-                >
-                  <span className="mr-3 text-blue-400 group-hover:scale-110 transition-transform mt-1">📍</span>
-                  <span>03, Korathota, Mahadeniya, Athurugiriya</span>
-                </motion.p>
-                <motion.a
-                  href="https://www.linkedin.com/in/manula-cooray-b5bb862b2/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-gray-300 hover:text-blue-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <span className="mr-3 text-blue-400 group-hover:scale-110 transition-transform">🌐</span>
-                  LinkedIn Profile
-                </motion.a>
-              </div>
-            </div>
+            <span className="eyebrow">Contact</span>
+            <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
+              Let&apos;s build something with standards.
+            </h2>
+            <p className="mt-6 max-w-xl text-base leading-8 text-[color:var(--muted)]">
+              I&apos;m open to conversations around software engineering, embedded systems, product
+              building, and collaborative opportunities where discipline and execution matter.
+            </p>
 
-            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20">
-              <h4 className="text-xl font-semibold mb-4 text-blue-400">Languages</h4>
-              <div className="flex gap-4">
-                <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">English</span>
-                <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">Sinhala</span>
-              </div>
+            <div className="mt-10 space-y-4">
+              {details.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-4"
+                >
+                  <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                    {item.label}
+                  </p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="mt-2 inline-flex items-center gap-3 text-base text-[color:var(--text)] hover:text-[color:var(--accent)]"
+                    >
+                      {item.value}
+                      {item.label === 'LinkedIn' && (
+                        <span className="rounded-full border border-[color:var(--border)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]">
+                          Open
+                        </span>
+                      )}
+                    </a>
+                  ) : (
+                    <p className="mt-2 text-base text-[color:var(--text)]">{item.value}</p>
+                  )}
+                  {'note' in item && item.note ? (
+                    <p className="mt-2 text-sm text-[color:var(--muted)]">{item.note}</p>
+                  ) : null}
+                </div>
+              ))}
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={{ opacity: 0, y: 28 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="glass-panel rounded-[2rem] p-8"
           >
-            <form onSubmit={handleSubmit} className="space-y-6" suppressHydrationWarning>
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg border border-blue-500/20">
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-300">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors"
-                      required
-                      suppressHydrationWarning
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-300">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors"
-                      required
-                      suppressHydrationWarning
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-300">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="w-full px-4 py-2 bg-gray-900/50 border border-blue-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white transition-colors resize-none"
-                      required
-                      suppressHydrationWarning
-                    />
-                  </div>
-                </div>
+            <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
+              Send a message
+            </p>
+            <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+              <div>
+                <label htmlFor="name" className="mb-2 block text-sm text-[color:var(--muted)]">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
+                />
               </div>
 
-              <motion.button
+              <div>
+                <label htmlFor="email" className="mb-2 block text-sm text-[color:var(--muted)]">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="mb-2 block text-sm text-[color:var(--muted)]">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
+                />
+              </div>
+
+              <button
                 type="submit"
-                className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950"
               >
                 Send Message
-              </motion.button>
+              </button>
             </form>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }
-

@@ -1,101 +1,101 @@
-"use client"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import Image from "next/image"
+'use client'
+
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+import Image from 'next/image'
+
+const swimming = [
+  'South Asian Age Group Championship 2016, 3rd place',
+  'Selected for Asian Age Groups in Uzbekistan, 2017',
+  'Competed in Princess Chulabhorn Swimming Championship, Thailand, 2017',
+  'Competed in Milo Malaysia Invitational Age Group Championship, 2018',
+  'National pool competition experience, 2019',
+  'Multiple colours and merits earned across 2016 to 2024',
+]
+
+const leadership = [
+  'Sport Council President at SLIIT',
+  'Captain of the SLIIT Swimming Team',
+  'Vice Captain of the SLIIT Swimming Team in 2024',
+  'Junior Vice Captain in 2019 and Captain in 2020 at Ananda College Swimming Team',
+]
 
 export default function Achievements() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  const swimmingAchievements = [
-    "South Asian Age Group Championship (2016): 3rd Place",
-    "Asian Age Groups, Uzbekistan (2017): Selected",
-    "Princess Chulabon Swimming Championship, Thailand (2017)",
-    "Milo/Pram Malaysia Invitational Age Group Swimming Championship (2018)",
-    "National Pool (2019)",
-    "Multiple Colors and Merits from 2016 to 2024",
-  ]
-
-  const leadershipAchievements = [
-    "Sport Council President (2025-Present): SLIIT",
-    "Captain (2025-Present): SLIIT Swimming Team",
-    "Vice Captain (2024): SLIIT Swimming Team",
-    "Junior Vice Captain (2019) and Captain (2020): Ananda College Swimming Team",
-  ]
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 })
 
   return (
-    <section id="achievements" ref={ref} className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
-      {/* Single swimming photo background */}
-      <div className="absolute inset-0 w-full h-full">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 0.15 } : {}}
-          transition={{ duration: 1 }}
-          className="w-full h-full relative"
-        >
-          <Image
-            src="/swim1.jpg?height=1080&width=1920"
-            alt="Swimming background"
-            fill
-            className="object-cover"
-            priority
-          />
-        </motion.div>
-      </div>
+    <section id="achievements" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl">
+        <div className="glass-panel relative overflow-hidden rounded-[2.25rem] p-6 sm:p-8 lg:p-10">
+          <div className="absolute inset-0">
+            <Image
+              src="/swim1.jpg"
+              alt="Manula competing in swimming"
+              fill
+              className="object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0b1116] via-[#0b1116]/92 to-[#0b1116]/70" />
+          </div>
 
-      {/* Gradient overlay to improve text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-900/30 z-10"></div>
+          <div className="relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55 }}
+            >
+              <span className="eyebrow">Results and leadership</span>
+              <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
+                Performance built long before race day.
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-[color:var(--muted)]">
+                Sport gave me more than medals. It taught me pacing, standards, recovery, and the
+                responsibility of leading by example. That same mindset shapes how I learn, build,
+                and collaborate.
+              </p>
+            </motion.div>
 
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="max-w-6xl mx-auto px-4 relative z-20"
-      >
-        <h2 className="text-4xl font-bold mb-12 text-white text-center">Achievements</h2>
-        <div className="mb-12">
-          <h3 className="text-3xl font-semibold mb-6 text-blue-400 text-center">Honors & Awards</h3>
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/2 bg-gray-900/70 p-6 rounded-lg backdrop-blur-sm">
-              <h4 className="text-2xl font-semibold mb-4 text-white">Swimming Achievements</h4>
-              <ul className="space-y-2">
-                {swimmingAchievements.map((achievement, index) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-start text-gray-300"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <span className="text-blue-400 mr-2">•</span>
-                    <span>{achievement}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-            <div className="md:w-1/2 bg-gray-900/70 p-6 rounded-lg backdrop-blur-sm">
-              <h4 className="text-2xl font-semibold mb-4 text-white">Leadership</h4>
-              <ul className="space-y-2">
-                {leadershipAchievements.map((achievement, index) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-start text-gray-300"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <span className="text-blue-400 mr-2">•</span>
-                    <span>{achievement}</span>
-                  </motion.li>
-                ))}
-              </ul>
+            <div className="grid gap-6">
+              <motion.div
+                initial={{ opacity: 0, x: 28 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="rounded-[1.8rem] border border-white/10 bg-black/20 p-6"
+              >
+                <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                  Swimming
+                </p>
+                <div className="mt-5 space-y-4">
+                  {swimming.map((item) => (
+                    <div key={item} className="flex gap-3">
+                      <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]" />
+                      <p className="text-sm leading-7 text-[color:var(--text)]">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 28 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="rounded-[1.8rem] border border-white/10 bg-black/20 p-6"
+              >
+                <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                  Leadership
+                </p>
+                <div className="mt-5 space-y-4">
+                  {leadership.map((item) => (
+                    <div key={item} className="flex gap-3">
+                      <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--track)]" />
+                      <p className="text-sm leading-7 text-[color:var(--text)]">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

@@ -2,205 +2,122 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import LightningEffect from './LightningEffect'
-import { MagneticButton } from './InteractiveEffects'
+
+const metrics = [
+  { label: 'Disciplines', value: '3', detail: 'Code, engineering, swimming' },
+  { label: 'Leadership', value: '4+', detail: 'Captaining teams and councils' },
+  { label: 'Mindset', value: '100%', detail: 'Built on consistency and discipline' },
+]
 
 export default function Hero() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+    if (!element) return
+
+    const top = element.getBoundingClientRect().top + window.scrollY - 88
+    window.scrollTo({ top, behavior: 'smooth' })
   }
 
   return (
-    <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-      {/* Lightning Effects */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <LightningEffect />
+    <section
+      id="home"
+      className="section-shell relative flex min-h-screen items-center overflow-hidden px-4 pb-16 pt-32 sm:px-6 lg:px-8"
+    >
+      <div className="absolute inset-0">
+        <div className="absolute left-[12%] top-28 h-72 w-72 rounded-full bg-[color:var(--accent)]/10 blur-3xl" />
+        <div className="absolute bottom-16 right-[8%] h-80 w-80 rounded-full bg-[color:var(--track)]/18 blur-3xl" />
       </div>
-      
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+
+      <div className="relative mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <motion.div
-          className="absolute -inset-[10px] opacity-50"
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-3xl" />
+          <span className="eyebrow">Modern athlete-engineer</span>
+          <h1 className="section-title mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] text-[color:var(--text)] sm:text-6xl lg:text-8xl">
+            Building systems with the discipline of a competitor.
+          </h1>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+            I&apos;m Manula Cooray, a computer science student, engineering learner, swimmer, and
+            student leader. I bring structure, calm, and competitive focus to every team and every
+            product I help build.
+          </p>
+
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950 shadow-[0_18px_45px_rgba(217,179,108,0.22)]"
+            >
+              Selected Work
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="rounded-full border border-[color:var(--border-strong)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[color:var(--text)]"
+            >
+              Let&apos;s Connect
+            </button>
+          </div>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            {metrics.map((metric, index) => (
+              <motion.div
+                key={metric.label}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 * index, duration: 0.55 }}
+                className="glass-panel rounded-[1.75rem] p-5"
+              >
+                <p className="text-3xl font-semibold text-[color:var(--text)]">{metric.value}</p>
+                <p className="mt-3 text-sm uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                  {metric.label}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{metric.detail}</p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
-        
-        {/* Additional animated orbs */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.4, 1],
-            x: [0, -40, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-      </div>
-      
-      {/* Animated stars */}
-      {Array.from({ length: 50 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white rounded-full"
-          style={{
-            left: `${(i * 7) % 100}%`,
-            top: `${(i * 11) % 100}%`,
-          }}
-          animate={{
-            opacity: [0.2, 1, 0.2],
-            scale: [0.5, 1.5, 0.5],
-          }}
-          transition={{
-            duration: 2 + (i % 3),
-            repeat: Infinity,
-            delay: i * 0.1,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          {/* Text content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 text-center md:text-left"
-          >
-            <motion.h1
-              className="text-5xl md:text-7xl font-bold mb-6 text-white"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-            >
-              Hello, I&apos;m{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                Manula Cooray
-              </span>
-            </motion.h1>
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 1 }}
-            >
-              Computer Science Student | Electrical and Electronic Engineering Student | Swimmer
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5 }}
-              className="flex flex-wrap gap-4 justify-center md:justify-start"
-            >
-              <MagneticButton
-                onClick={() => scrollToSection('projects')}
-                className="px-8 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors relative overflow-hidden group"
-              >
-                <span className="relative z-10">View Projects</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                  initial={false}
-                />
-              </MagneticButton>
-              <MagneticButton
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-3 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500/10 transition-colors relative overflow-hidden group"
-              >
-                <span className="relative z-10">Contact Me</span>
-                <motion.div
-                  className="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                  initial={false}
-                />
-              </MagneticButton>
-            </motion.div>
-          </motion.div>
-
-          {/* Profile image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex-1 relative"
-          >
-            <motion.div
-              className="relative w-80 h-80 md:w-96 md:h-96 mx-auto"
-              whileHover={{ scale: 1.1, rotate: 5, y: -10 }}
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{
-                y: {
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                },
-                default: { duration: 0.3, type: "spring", stiffness: 300 }
-              }}
-            >
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="relative"
+        >
+          <div className="glass-panel relative overflow-hidden rounded-[2rem] border border-[color:var(--border-strong)] p-4">
+            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[color:var(--accent)]/18 to-transparent" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.6rem]">
               <Image
                 src="/me2.jpg"
-                alt="Manula Cooray"
+                alt="Portrait of Manula Cooray"
                 fill
-                className="rounded-full object-cover"
                 priority
+                className="object-cover object-center"
               />
-            </motion.div>
-          </motion.div>
-        </div>
+            </div>
+            <div className="relative mt-4 grid gap-3 rounded-[1.4rem] border border-white/10 bg-black/20 p-4 sm:grid-cols-2">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--muted)]">
+                  Current focus
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[color:var(--text)]">
+                  Software systems, embedded thinking, and leadership shaped through high-performance
+                  sport.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--muted)]">
+                  Approach
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[color:var(--text)]">
+                  Train hard, think clearly, execute with intent, and keep standards high.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <div className="w-6 h-10 border-2 border-blue-500 rounded-full flex justify-center">
-          <motion.div
-            animate={{
-              y: [0, 12, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: "loop",
-            }}
-            className="w-1 h-2 bg-blue-500 rounded-full mt-2"
-          />
-        </div>
-      </motion.div>
     </section>
   )
 }

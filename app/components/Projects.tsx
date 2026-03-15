@@ -1,127 +1,113 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { TiltCard } from './InteractiveEffects'
 
 const projects = [
   {
     id: 1,
-    title: 'AquaMonitor',
-    description: 'IoT Fish Tank Monitoring System (2023)',
-    details: 'Tracks temperature, water level, and turbidity of fish tanks. Built using ESP32 microcontroller, Arduino IDE, Firebase, and web app.',
-    techStack: ['ESP32', 'Arduino IDE', 'Firebase', 'React'],
-    features: [
-      'Real-time temperature monitoring',
-      'Water level tracking',
-      'Turbidity measurement',
-      'Web dashboard for data visualization'
-    ],
+    year: '2025',
+    title: 'Distributed File System',
+    summary: 'A resilient distributed storage system designed around fault tolerance, leader election, and recovery.',
+    impact:
+      'Explored how reliability, timing, and distributed coordination come together in systems built for high availability.',
+    stack: ['Go', 'Docker', 'Kubernetes', 'Next.js'],
+    links: {
+      github: 'https://github.com/MPcooray/ds-new.git',
+    },
   },
   {
     id: 2,
-    title: 'Laboratory Management System',
-    description: 'Efficient Patient, Test, and Inventory Management (2024)',
-    details: 'Features role-based access for efficient management. Built using Spring Boot, PostgreSQL, and Next.js.',
-    techStack: ['Spring Boot', 'PostgreSQL', 'Next.js', 'TypeScript'],
-    features: [
-      'Role-based access control',
-      'Patient record management',
-      'Test result tracking',
-      'Inventory management'
-    ],
-    github: 'https://github.com/yourusername/lab-management',
-    demo: 'https://lab-management-demo.com'
+    year: '2025',
+    title: 'FormLang++',
+    summary: 'A domain-specific language that turns structured definitions into validated, responsive HTML forms.',
+    impact:
+      'Focused on parsing, compiler thinking, and developer tooling by connecting grammar design with practical UI generation.',
+    stack: ['C', 'Lex', 'Yacc', 'JavaScript'],
+    links: {
+      github: 'https://github.com/MPcooray/formlangProject.git',
+      demo: 'https://youtu.be/GuhBaKSSqrw?si=MG_n2lmNh3BvXMte',
+    },
   },
   {
     id: 3,
-    title: 'Early Accident Detection System',
-    description: 'Innovative Safety Solution (2024)',
-    details: 'Details to be added.',
-    techStack: ['C++', 'ESP32', 'React'],
-    features: [
-      'Real-time accident detection',
-      'Alert system',
-      'Video analysis',
-      'Emergency response integration'
-    ],
-    github: 'https://github.com/yourusername/accident-detection',
-    demo: 'https://accident-detection-demo.com'
+    year: '2024',
+    title: 'Laboratory Management System',
+    summary: 'An operations-focused platform for handling patients, tests, and inventory with role-based control.',
+    impact:
+      'Combined backend structure and product thinking to improve clarity, access management, and day-to-day workflow efficiency.',
+    stack: ['Spring Boot', 'PostgreSQL', 'Next.js', 'TypeScript'],
   },
   {
     id: 4,
-    title: 'FormLang++',
-    description: 'Domain-Specific Language for Dynamic HTML Form Generation (2025)',
-    details: 'Generates responsive and validated HTML forms from a custom DSL using Flex (Lex) and Bison (Yacc).Includes real-time form validation, styling, and support for various input types like text, number, email, date, dropdown, file uploads, and more.',
-    techStack: ['C', 'Lex & Yacc', 'HTML', 'JavaScript'],
-    features: [
-      'DSL Parsing',
-      'EBNF grammar',
-      'Semantic actions',
-      'Client-side validation',
-      'Modular design'
-    ],
-    github: 'https://github.com/MPcooray/formlangProject.git',
-    demo: 'https://youtu.be/GuhBaKSSqrw?si=MG_n2lmNh3BvXMte'
+    year: '2023',
+    title: 'AquaMonitor',
+    summary: 'An IoT fish tank monitoring system tracking temperature, water level, and turbidity in real time.',
+    impact:
+      'Brought hardware and software together through sensors, ESP32 integration, and a connected monitoring dashboard.',
+    stack: ['ESP32', 'Arduino IDE', 'Firebase', 'React'],
   },
-  {
-    id: 5,
-    title: 'Distributed File System',
-    description: 'Fault-Tolerant, Replicated Storage System (2025)',
-    details: 'A scalable and resilient distributed file system with automatic leader election, file replication, and fault recovery. Developed using Go (Golang) and Next.js (React), with custom time synchronization via NTP and Lamport clocks.',
-    techStack: ['Go', 'Next.js', 'Docker', 'Kubernetes'],
-    features: [
-      'Automatic leader election',
-      'File replication',
-      'Fault recovery',
-      'Time synchronization',
-      'High availability'
-    ],
-    github: 'https://github.com/MPcooray/ds-new.git',
-    demo: 'https://distributed-fs-demo.com'
-  }
 ]
 
 export default function Projects() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 })
+  const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
 
   return (
-    <section id="projects" ref={ref} className="min-h-screen flex items-center justify-center py-20 bg-black">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-12 text-center text-white">My Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section id="projects" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <span className="eyebrow">Selected work</span>
+            <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
+              Systems built with structure and intent.
+            </h2>
+          </div>
+          <p className="max-w-xl text-base leading-8 text-[color:var(--muted)]">
+            These projects reflect the kind of work I enjoy most: solving practical problems,
+            blending technical depth with usability, and building things that stay reliable under
+            pressure.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
           {projects.map((project, index) => (
-            <TiltCard
+            <motion.button
               key={project.id}
-              className="bg-gray-800 rounded-lg p-6 hover:shadow-lg transition-all cursor-pointer hover:scale-105 hover:bg-gray-700 border border-gray-700 hover:border-blue-500/50 relative overflow-hidden group"
-              initial={{ opacity: 0, y: 50 }}
+              type="button"
+              initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               onClick={() => setSelectedProject(project)}
+              className="glass-panel group rounded-[2rem] p-7 text-left"
             >
-              <h3 className="text-2xl font-semibold mb-2 text-blue-400">{project.title}</h3>
-              <p className="text-gray-300 mb-4">{project.description}</p>
-              <p className="text-gray-400 line-clamp-2">{project.details}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.techStack?.slice(0, 3).map((tech, i) => (
-                  <span key={i} className="text-sm bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
-                    {tech}
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                  {project.year}
+                </span>
+                <span className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                  Tap for details
+                </span>
+              </div>
+              <h3 className="mt-6 text-2xl font-semibold text-[color:var(--text)]">
+                {project.title}
+              </h3>
+              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
+                {project.summary}
+              </p>
+              <p className="mt-5 text-sm leading-7 text-[color:var(--text)]">{project.impact}</p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {project.stack.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/10 bg-black/20 px-3 py-2 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]"
+                  >
+                    {item}
                   </span>
                 ))}
-                {project.techStack?.length > 3 && (
-                  <span className="text-sm text-gray-400">+{project.techStack.length - 3} more</span>
-                )}
               </div>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"
-                initial={false}
-              />
-            </TiltCard>
+            </motion.button>
           ))}
         </div>
 
@@ -131,70 +117,81 @@ export default function Projects() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+              className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-gray-800 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-                onClick={e => e.stopPropagation()}
+                initial={{ opacity: 0, y: 32, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 24, scale: 0.98 }}
+                className="glass-panel max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] p-8"
+                onClick={(event) => event.stopPropagation()}
               >
-                <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-3xl font-bold text-blue-400">{selectedProject.title}</h3>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                      {selectedProject.year}
+                    </p>
+                    <h3 className="mt-3 text-3xl font-semibold text-[color:var(--text)]">
+                      {selectedProject.title}
+                    </h3>
+                  </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="text-gray-400 hover:text-white"
+                    className="rounded-full border border-white/10 px-3 py-1 text-lg text-[color:var(--muted)]"
+                    aria-label="Close project details"
                   >
-                    ✕
+                    ×
                   </button>
                 </div>
-                <p className="text-xl text-gray-300 mb-4">{selectedProject.description}</p>
-                <p className="text-gray-400 mb-6">{selectedProject.details}</p>
-                
-                <div className="mb-6">
-                  <h4 className="text-xl font-semibold text-white mb-3">Tech Stack</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.techStack?.map((tech, i) => (
-                      <span key={i} className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded">
-                        {tech}
+
+                <p className="mt-6 text-lg leading-8 text-[color:var(--text)]">
+                  {selectedProject.summary}
+                </p>
+                <p className="mt-5 text-sm leading-8 text-[color:var(--muted)]">
+                  {selectedProject.impact}
+                </p>
+
+                <div className="mt-8">
+                  <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                    Stack
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {selectedProject.stack.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
+                      >
+                        {item}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <h4 className="text-xl font-semibold text-white mb-3">Key Features</h4>
-                  <ul className="list-disc list-inside space-y-2">
-                    {selectedProject.features?.map((feature, i) => (
-                      <li key={i} className="text-gray-300">{feature}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex gap-4">
-                  {selectedProject.github && (
-                    <a
-                      href={selectedProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors"
-                    >
-                      View on GitHub
-                    </a>
-                  )}
-                  {selectedProject.demo && (
-                    <a
-                      href={selectedProject.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors"
-                    >
-                      Live Demo
-                    </a>
-                  )}
-                </div>
+                {(selectedProject.links?.github || selectedProject.links?.demo) && (
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    {selectedProject.links?.github && (
+                      <a
+                        href={selectedProject.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+                      >
+                        View Code
+                      </a>
+                    )}
+                    {selectedProject.links?.demo && (
+                      <a
+                        href={selectedProject.links.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full bg-[color:var(--accent)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-950"
+                      >
+                        Watch Demo
+                      </a>
+                    )}
+                  </div>
+                )}
               </motion.div>
             </motion.div>
           )}
@@ -203,4 +200,3 @@ export default function Projects() {
     </section>
   )
 }
-
