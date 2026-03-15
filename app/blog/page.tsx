@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-
-const mediumProfile = 'https://medium.com/@manulacooray'
+import { blogArticles, mediumProfile } from './articles'
 
 const featuredThemes = [
   {
@@ -28,57 +27,6 @@ const writingSignals = [
   { label: 'Published pieces', value: '7+' },
   { label: 'Core themes', value: '4' },
   { label: 'Voice', value: 'Practical + personal' },
-]
-
-const mediumPosts = [
-  {
-    title: 'How Graphics & Visualization Became the Most Unexpectedly Exciting Module of My Degree',
-    href: 'https://medium.com/p/765405b66470',
-    type: 'Reflection',
-    note: 'A personal technical reflection on discovering unexpected excitement in graphics and visualization.',
-  },
-  {
-    title: 'Understanding Microservice Architecture: From Monolith to Modern Systems',
-    href: 'https://medium.com/@manulacooray/understanding-microservice-architecture-from-monolith-to-modern-systems-6712530b3318',
-    type: 'Architecture',
-    note: 'A systems-focused piece on how software architecture evolves from monoliths toward scalable service-based design.',
-  },
-  {
-    title: 'Why Every Career in Technology Now Requires AI Integration',
-    href: 'https://medium.com/@manulacooray/why-every-career-in-technology-now-requires-ai-integration-9079c45fb476',
-    type: 'AI',
-    note: 'A broader perspective on why AI literacy is becoming fundamental across modern technical careers.',
-  },
-  {
-    title: 'Day 01 - Introduction to React: The Future of Frontend Development',
-    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-01-introduction-to-react-the-future-of-frontend-development-30cd783dd743',
-    type: 'React Series',
-    note: 'The opening piece in a React learning series, covering the bigger picture of why React matters.',
-  },
-  {
-    title: 'Day 02 - Understanding React Components: The Building Blocks of Every React App',
-    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-02-understanding-react-components-the-building-blocks-of-every-react-app-7eb589f811d0',
-    type: 'React Series',
-    note: 'A practical introduction to components and the compositional mindset behind React applications.',
-  },
-  {
-    title: 'Day 03 - Understanding React Hooks: Bringing Life to Functional Components',
-    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-03-understanding-react-hooks-bringing-life-to-functional-components-41f7b150673f',
-    type: 'React Series',
-    note: 'An accessible look at hooks and how they make functional React components dynamic and useful.',
-  },
-  {
-    title: 'Day 04 - Working with APIs in React: Bringing Your App to Life',
-    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-04-working-with-apis-in-react-bringing-your-app-to-life-6d06f4c732f7',
-    type: 'React Series',
-    note: 'A hands-on walkthrough of using APIs to connect interface work to real application data.',
-  },
-  {
-    title: 'Day 05 - The React Ecosystem: Node.js, Vite, Next.js, and More',
-    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-05-the-react-ecosystem-node-js-vite-next-js-and-more-425e1744da55',
-    type: 'React Series',
-    note: 'A broader ecosystem overview that connects React development with the surrounding tooling landscape.',
-  },
 ]
 
 const plannedSeries = [
@@ -173,12 +121,10 @@ export default function BlogPage() {
                 technical depth without losing clarity.
               </p>
               <a
-                href="https://medium.com/@manulacooray/understanding-microservice-architecture-from-monolith-to-modern-systems-6712530b3318"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/blog/microservice-architecture"
                 className="mt-6 inline-flex rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
               >
-                Read Featured Post
+                Read Summary
               </a>
             </div>
           </div>
@@ -240,12 +186,10 @@ export default function BlogPage() {
               Published articles
             </p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {mediumPosts.map((post) => (
-                <a
-                  key={post.href}
-                  href={post.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {blogArticles.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
                   className="block rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-5"
                 >
                   <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--accent)]">
@@ -255,7 +199,7 @@ export default function BlogPage() {
                     {post.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{post.note}</p>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
