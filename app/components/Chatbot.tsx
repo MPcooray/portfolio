@@ -10,6 +10,39 @@ interface Message {
   timestamp: Date
 }
 
+const knowledge = {
+  summary:
+    'Manula Cooray is a Sri Lankan athlete-engineer whose journey combines software, engineering, leadership, and competitive swimming.',
+  education: [
+    'BSc (Hons) in Computer Science at SLIIT',
+    'BEng (Hons) in Electrical and Electronic Engineering at the University of the West of England, completed with a second lower degree',
+    'MSc in Artificial Intelligence started in 2025 and continues through 2026 at Anglia Ruskin University',
+  ],
+  timeline: [
+    'Ananda College from 2008 to 2022',
+    'Junior Prefect in 2012',
+    'Swimming Junior Vice Captain in 2019',
+    'Swimming Captain in 2020',
+    'SLIIT Swimming Vice Captain in 2024',
+    'SLIIT Swimming Captain in 2025',
+    'SLIIT Sports Council President in 2025',
+  ],
+  projects: [
+    'Hospital Laboratory Management System using React or Next.js, Spring Boot, and PostgreSQL',
+    'AI-powered medical symptom checker with symptom search, diagnosis prediction, guidance, and nearby doctor discovery',
+    'Vehicle detection system using ultrasonic sensors, LCD displays, LEDs, and buzzer alerts',
+    'Noise reduction filter for digital signal processing work',
+    'Control system design involving plant modelling, controller design, and simulation',
+    'Cloud and systems work with AWS EC2, SSH, SFTP, SCP, rsync, and OpenMP',
+  ],
+  strengths: [
+    'discipline from competitive swimming',
+    'leadership built through school and university sports roles',
+    'interest in software systems, embedded thinking, AI, and technical problem solving',
+    'public speaking, team leadership, and event coordination',
+  ],
+}
+
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -22,7 +55,7 @@ export default function Chatbot() {
     setMessages([
       {
         id: 1,
-        text: "Hi, I'm Manula's assistant. Ask about his studies, projects, swimming background, leadership, or the roles he's interested in.",
+        text: "Hi, I'm Manula's assistant. Ask about his story, education, projects, swimming journey, leadership roles, or career direction.",
         sender: 'bot',
         timestamp: new Date(),
       },
@@ -37,41 +70,67 @@ export default function Chatbot() {
     const message = userMessage.toLowerCase().trim()
 
     if (
+      message.includes('who are you') ||
+      message.includes('who is manula') ||
+      message.includes('about manula') ||
+      message.includes('tell me about')
+    ) {
+      return (
+        `${knowledge.summary}\n\n` +
+        'He combines technical ambition with athletic discipline and has grown through leadership roles from school into university.'
+      )
+    }
+
+    if (
       message.includes('education') ||
       message.includes('qualification') ||
       message.includes('degree') ||
-      message.includes('study')
+      message.includes('study') ||
+      message.includes('msc') ||
+      message.includes('uwe')
     ) {
-      return (
-        "Manula's education includes:\n\n" +
-        "• BSc (Hons) in Computer Science at SLIIT\n" +
-        "• BEng (Hons) in Electrical and Electronic Engineering at UWE\n" +
-        "• MSc in Artificial Intelligence at Anglia Ruskin University\n\n" +
-        'He is intentionally combining software, electronics, and AI into one practical foundation.'
-      )
+      return `Manula's education includes:\n\n• ${knowledge.education.join('\n• ')}`
+    }
+
+    if (
+      message.includes('story') ||
+      message.includes('journey') ||
+      message.includes('timeline') ||
+      message.includes('background')
+    ) {
+      return `Here is a quick view of Manula's journey:\n\n• ${knowledge.timeline.join('\n• ')}`
     }
 
     if (
       message.includes('swimming') ||
       message.includes('sport') ||
       message.includes('captain') ||
+      message.includes('president') ||
       message.includes('leadership') ||
       message.includes('achievement')
     ) {
       return (
-        "Manula's athlete background includes international age-group competition, national-level experience, and leadership roles including Sport Council President and swimming team captain at SLIIT."
+        'Sport is a major part of Manula’s story. He progressed from school swimming leadership at Ananda College to SLIIT Swimming Vice Captain in 2024, Swimming Captain in 2025, and Sports Council President in 2025.'
       )
     }
 
     if (
       message.includes('project') ||
       message.includes('work') ||
+      message.includes('system') ||
       message.includes('build') ||
-      message.includes('system')
+      message.includes('technical')
     ) {
-      return (
-        'His portfolio highlights a distributed file system, a domain-specific language for dynamic form generation, a laboratory management platform, and an IoT monitoring system.'
-      )
+      return `Some of Manula's technical work includes:\n\n• ${knowledge.projects.join('\n• ')}`
+    }
+
+    if (
+      message.includes('skill') ||
+      message.includes('strength') ||
+      message.includes('personality') ||
+      message.includes('character')
+    ) {
+      return `Manula's strengths include:\n\n• ${knowledge.strengths.join('\n• ')}`
     }
 
     if (
@@ -81,27 +140,30 @@ export default function Chatbot() {
       message.includes('interested')
     ) {
       return (
-        'Manula is especially interested in software engineering, embedded systems, and opportunities where technical depth, discipline, and teamwork matter.'
+        'Manula is especially interested in software engineering, AI-related work, embedded or systems-oriented roles, and opportunities where leadership, discipline, and technical depth matter.'
       )
     }
 
     if (message.match(/^(hi|hello|hey|good morning|good afternoon|good evening)/)) {
-      return 'Hello. You can ask me about Manula’s studies, projects, athletic background, or career interests.'
+      return 'Hello. You can ask me about Manula’s story, education, projects, swimming journey, leadership roles, or career direction.'
     }
 
     if (message.match(/(thank|thanks)/)) {
       return 'Happy to help. Ask anything else you want to know about Manula.'
     }
 
-    return 'I can help with Manula’s education, projects, swimming journey, leadership roles, and career direction.'
+    return (
+      "I can help with Manula's story, education, projects, swimming background, leadership roles, and career direction."
+    )
   }
 
   const handleSend = () => {
     if (!input.trim()) return
 
+    const currentInput = input
     const userMessage: Message = {
       id: messages.length + 1,
-      text: input,
+      text: currentInput,
       sender: 'user',
       timestamp: new Date(),
     }
@@ -112,7 +174,7 @@ export default function Chatbot() {
     setTimeout(() => {
       const botResponse: Message = {
         id: messages.length + 2,
-        text: getBotResponse(input),
+        text: getBotResponse(currentInput),
         sender: 'bot',
         timestamp: new Date(),
       }
@@ -164,7 +226,7 @@ export default function Chatbot() {
                 Manula&apos;s Assistant
               </p>
               <p className="mt-2 text-sm text-[color:var(--text)]">
-                Quick answers about work, sport, study, and leadership.
+                Quick answers about story, studies, projects, sport, and leadership.
               </p>
             </div>
 
@@ -200,7 +262,7 @@ export default function Chatbot() {
                       handleSend()
                     }
                   }}
-                  placeholder="Ask something about Manula"
+                  placeholder="Ask about Manula"
                   className="flex-1 rounded-full border border-[color:var(--border)] bg-black/20 px-4 py-3 text-sm text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
                 />
                 <button

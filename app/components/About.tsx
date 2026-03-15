@@ -6,15 +6,15 @@ import { useInView } from 'react-intersection-observer'
 const pillars = [
   {
     title: 'Systems thinking',
-    text: 'I enjoy turning moving parts into dependable systems, whether that means backend logic, embedded workflows, or product structure.',
+    text: 'I like turning complexity into dependable systems, whether that means backend architecture, embedded workflows, or structured product thinking.',
   },
   {
     title: 'Competitive discipline',
-    text: 'Swimming taught me consistency, composure under pressure, and how daily standards shape long-term performance.',
+    text: 'Competitive swimming shaped my discipline, composure under pressure, and respect for the standards built through repetition.',
   },
   {
     title: 'Leadership in motion',
-    text: 'From sport council work to captaining teams, I like building momentum around people, not just around tasks.',
+    text: 'From captaining teams to leading the SLIIT Sports Council, I care about building momentum around people as much as around results.',
   },
 ]
 
@@ -25,9 +25,9 @@ const journey = [
     place: 'Sri Lanka Institute of Information Technology (SLIIT)',
   },
   {
-    period: '2024 - 2025',
+    period: 'Completed',
     title: 'BEng (Hons) in Electrical and Electronic Engineering',
-    place: 'University of the West of England',
+    place: 'University of the West of England — Second Lower division',
   },
   {
     period: '2025 - 2026',
@@ -40,10 +40,13 @@ const capabilities = [
   'C / C++',
   'Java',
   'React / Next.js',
+  'Spring Boot',
   'PostgreSQL / MySQL',
+  'AWS / SSH tooling',
   'Embedded systems',
+  'Signal processing',
   'Problem solving',
-  'Digital communication',
+  'Public speaking',
   'Team leadership',
 ]
 
@@ -62,12 +65,13 @@ export default function About() {
           <div className="space-y-6">
             <span className="eyebrow">Profile</span>
             <h2 className="section-title text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
-              Calm execution, ambitious direction.
+              Engineered with discipline. Led with intent.
             </h2>
             <p className="max-w-xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
-              My work is shaped by two worlds that demand precision: engineering and performance
-              sport. I care about building reliable systems, communicating clearly, and showing up
-              with consistency when pressure is high.
+              I come from two environments that both demand precision: engineering and competitive
+              sport. That combination shaped how I work today. I value structure, resilience,
+              accountability, and the ability to stay composed while building toward ambitious
+              goals.
             </p>
             <div className="grid gap-4">
               {pillars.map((pillar, index) => (
@@ -95,12 +99,13 @@ export default function About() {
                     Academic route
                   </p>
                   <h3 className="mt-3 text-2xl font-semibold text-[color:var(--text)]">
-                    Cross-disciplinary by design
+                    Cross-disciplinary by choice
                   </h3>
                 </div>
                 <p className="max-w-sm text-sm leading-7 text-[color:var(--muted)]">
-                  I&apos;m intentionally combining computing, electronics, and AI to build a broad but
-                  practical technical foundation.
+                  My path spans computer science, electrical and electronic engineering, and
+                  postgraduate study in AI, giving me a practical foundation across software,
+                  hardware, and intelligent systems.
                 </p>
               </div>
 
@@ -131,7 +136,7 @@ export default function About() {
                   Tools and strengths
                 </h3>
                 <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
-                  Built for teams and systems
+                  Technical and human skills
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">

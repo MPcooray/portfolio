@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'Profile' },
+  { id: 'story', label: 'Story' },
   { id: 'projects', label: 'Work' },
   { id: 'achievements', label: 'Results' },
   { id: 'contact', label: 'Contact' },

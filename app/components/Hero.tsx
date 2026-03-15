@@ -28,18 +28,18 @@ export default function Hero() {
         <div className="absolute bottom-16 right-[8%] h-80 w-80 rounded-full bg-[color:var(--track)]/18 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <div className="relative mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(420px,0.92fr)] lg:items-start lg:gap-14">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl"
+          className="max-w-[48rem] pt-4 lg:pt-12"
         >
           <span className="eyebrow">Modern athlete-engineer</span>
-          <h1 className="section-title mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] text-[color:var(--text)] sm:text-6xl lg:text-8xl">
+          <h1 className="section-title mt-6 max-w-[11ch] text-5xl font-semibold leading-[0.92] tracking-[-0.05em] text-[color:var(--text)] sm:text-6xl lg:text-[6.35rem]">
             Building systems with the discipline of a competitor.
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+          <p className="mt-7 max-w-[40rem] text-base leading-8 text-[color:var(--muted)] sm:text-lg">
             I&apos;m Manula Cooray, a computer science student, engineering learner, swimmer, and
             student leader. I bring structure, calm, and competitive focus to every team and every
             product I help build.
@@ -83,9 +83,9 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative"
+          className="relative lg:pt-24"
         >
-          <div className="glass-panel relative overflow-hidden rounded-[2rem] border border-[color:var(--border-strong)] p-4">
+          <div className="glass-panel relative mx-auto max-w-[34rem] overflow-hidden rounded-[2rem] border border-[color:var(--border-strong)] p-4">
             <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[color:var(--accent)]/18 to-transparent" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.6rem]">
               <Image
