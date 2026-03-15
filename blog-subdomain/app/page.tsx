@@ -21,6 +21,12 @@ const featuredThemes = [
   },
 ]
 
+const writingSignals = [
+  { label: 'Published pieces', value: '7+' },
+  { label: 'Core themes', value: '4' },
+  { label: 'Voice', value: 'Practical + personal' },
+]
+
 const mediumPosts = [
   {
     title: 'How Graphics & Visualization Became the Most Unexpectedly Exciting Module of My Degree',
@@ -33,6 +39,42 @@ const mediumPosts = [
     href: 'https://medium.com/@manulacooray/understanding-microservice-architecture-from-monolith-to-modern-systems-6712530b3318',
     type: 'Architecture',
     note: 'A systems-focused piece on how software architecture evolves from monoliths toward scalable service-based design.',
+  },
+  {
+    title: 'Why Every Career in Technology Now Requires AI Integration',
+    href: 'https://medium.com/@manulacooray/why-every-career-in-technology-now-requires-ai-integration-9079c45fb476',
+    type: 'AI',
+    note: 'A broader perspective on why AI literacy is becoming fundamental across modern technical careers.',
+  },
+  {
+    title: 'Day 01 - Introduction to React: The Future of Frontend Development',
+    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-01-introduction-to-react-the-future-of-frontend-development-30cd783dd743',
+    type: 'React Series',
+    note: 'The opening piece in a React learning series, covering the bigger picture of why React matters.',
+  },
+  {
+    title: 'Day 02 - Understanding React Components: The Building Blocks of Every React App',
+    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-02-understanding-react-components-the-building-blocks-of-every-react-app-7eb589f811d0',
+    type: 'React Series',
+    note: 'A practical introduction to components and the compositional mindset behind React applications.',
+  },
+  {
+    title: 'Day 03 - Understanding React Hooks: Bringing Life to Functional Components',
+    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-03-understanding-react-hooks-bringing-life-to-functional-components-41f7b150673f',
+    type: 'React Series',
+    note: 'An accessible look at hooks and how they make functional React components dynamic and useful.',
+  },
+  {
+    title: 'Day 04 - Working with APIs in React: Bringing Your App to Life',
+    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-04-working-with-apis-in-react-bringing-your-app-to-life-6d06f4c732f7',
+    type: 'React Series',
+    note: 'A hands-on walkthrough of using APIs to connect interface work to real application data.',
+  },
+  {
+    title: 'Day 05 - The React Ecosystem: Node.js, Vite, Next.js, and More',
+    href: 'https://medium.com/@manulacooray/%EF%B8%8F-day-05-the-react-ecosystem-node-js-vite-next-js-and-more-425e1744da55',
+    type: 'React Series',
+    note: 'A broader ecosystem overview that connects React development with the surrounding tooling landscape.',
   },
 ]
 
@@ -98,26 +140,62 @@ export default function Home() {
                 Visit Medium
               </a>
             </div>
-          </div>
 
-          <div className="glass-panel rounded-[2rem] p-8">
-            <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
-              What this blog covers
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {['Software systems', 'Artificial intelligence', 'Embedded thinking', 'Leadership', 'Swimming', 'Lessons learned'].map((topic) => (
-                <span
-                  key={topic}
-                  className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
-                >
-                  {topic}
-                </span>
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {writingSignals.map((signal) => (
+                <div key={signal.label} className="glass-panel rounded-[1.5rem] p-5">
+                  <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
+                    {signal.label}
+                  </p>
+                  <p className="mt-3 text-xl font-semibold text-[color:var(--text)]">
+                    {signal.value}
+                  </p>
+                </div>
               ))}
             </div>
-            <p className="mt-6 text-sm leading-7 text-[color:var(--muted)]">
-              The goal is simple: share ideas that feel grounded, personal, and useful, not just
-              polished.
-            </p>
+          </div>
+
+          <div className="grid gap-5">
+            <div className="glass-panel rounded-[2rem] p-8">
+              <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                Why this journal exists
+              </p>
+              <p className="mt-5 text-lg leading-8 text-[color:var(--text)]">
+                I use this space to connect technical ideas with lived experience: how systems are
+                built, how people grow, and how discipline from sport carries into engineering.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {['Software systems', 'Artificial intelligence', 'Embedded thinking', 'Leadership', 'Swimming', 'Lessons learned'].map((topic) => (
+                  <span
+                    key={topic}
+                    className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
+                  >
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-panel rounded-[2rem] p-8">
+              <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                Start here
+              </p>
+              <h2 className="mt-4 text-2xl font-semibold text-[color:var(--text)]">
+                Understanding Microservice Architecture
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-[color:var(--muted)]">
+                A strong first article for readers who want to understand how your writing handles
+                technical depth without losing clarity.
+              </p>
+              <a
+                href="https://medium.com/@manulacooray/understanding-microservice-architecture-from-monolith-to-modern-systems-6712530b3318"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+              >
+                Read Featured Post
+              </a>
+            </div>
           </div>
         </section>
 
@@ -152,7 +230,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="medium-archive" className="mt-20 grid gap-8 lg:grid-cols-[1fr_1fr]">
+        <section id="medium-archive" className="mt-20 grid gap-8 lg:grid-cols-[0.76fr_1.24fr]">
           <div className="glass-panel rounded-[2rem] p-8">
             <span className="eyebrow">Medium archive</span>
             <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)]">
@@ -174,9 +252,9 @@ export default function Home() {
 
           <div className="glass-panel rounded-[2rem] p-8">
             <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
-              Featured Medium posts
+              Published articles
             </p>
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
               {mediumPosts.map((post) => (
                 <a
                   key={post.href}
