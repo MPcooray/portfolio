@@ -1,5 +1,9 @@
 import Link from 'next/link'
 import { blogArticles, mediumProfile } from './articles'
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 const featuredThemes = [
   {
@@ -77,7 +81,7 @@ export default function Home() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a
                 href="https://manulacooray.com"
-                className="rounded-full border border-[color:var(--border-strong)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[color:var(--text)]"
+                className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
               >
                 Back to Portfolio
               </a>
@@ -85,7 +89,7 @@ export default function Home() {
                 href={mediumProfile}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950"
+                className={cn(buttonVariants({ size: 'lg' }))}
               >
                 Visit Medium
               </a>
@@ -93,20 +97,23 @@ export default function Home() {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {writingSignals.map((signal) => (
-                <div key={signal.label} className="glass-panel rounded-[1.5rem] p-5">
+                <Card key={signal.label} className="rounded-[1.5rem]">
+                  <CardContent className="p-5">
                   <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
                     {signal.label}
                   </p>
                   <p className="mt-3 text-xl font-semibold text-[color:var(--text)]">
                     {signal.value}
                   </p>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
 
           <div className="grid gap-5">
-            <div className="glass-panel rounded-[2rem] p-8">
+            <Card className="rounded-[2rem]">
+              <CardContent className="p-8">
               <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
                 Why this journal exists
               </p>
@@ -116,17 +123,14 @@ export default function Home() {
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 {['Software systems', 'Artificial intelligence', 'Embedded thinking', 'Leadership', 'Swimming', 'Lessons learned'].map((topic) => (
-                  <span
-                    key={topic}
-                    className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
-                  >
-                    {topic}
-                  </span>
+                  <Badge key={topic}>{topic}</Badge>
                 ))}
               </div>
-            </div>
+              </CardContent>
+            </Card>
 
-            <div className="glass-panel rounded-[2rem] p-8">
+            <Card className="rounded-[2rem]">
+              <CardContent className="p-8">
               <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
                 Start here
               </p>
@@ -139,11 +143,12 @@ export default function Home() {
               </p>
               <a
                 href="/articles/microservice-architecture"
-                className="mt-6 inline-flex rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+                className={cn(buttonVariants({ variant: 'outline' }), 'mt-6')}
               >
                 Read Summary
               </a>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
@@ -163,7 +168,8 @@ export default function Home() {
 
           <div className="grid gap-6 lg:grid-cols-3">
             {featuredThemes.map((theme) => (
-              <article key={theme.title} className="glass-panel rounded-[2rem] p-7">
+              <Card key={theme.title} className="rounded-[2rem]">
+                <CardContent className="p-7">
                 <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
                   {theme.category}
                 </p>
@@ -173,13 +179,15 @@ export default function Home() {
                 <p className="mt-4 text-sm leading-8 text-[color:var(--muted)]">
                   {theme.summary}
                 </p>
-              </article>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </section>
 
         <section id="medium-archive" className="mt-20 grid gap-8 lg:grid-cols-[0.76fr_1.24fr]">
-          <div className="glass-panel rounded-[2rem] p-8">
+          <Card className="rounded-[2rem]">
+            <CardContent className="p-8">
             <span className="eyebrow">Medium archive</span>
             <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)]">
               Published writing, now connected to the portfolio.
@@ -192,23 +200,26 @@ export default function Home() {
               href={mediumProfile}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+              className={cn(buttonVariants({ variant: 'outline' }), 'mt-8')}
             >
               Open Medium Profile
             </a>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="glass-panel rounded-[2rem] p-8">
+          <Card className="rounded-[2rem]">
+            <CardContent className="p-8">
             <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
               Published articles
             </p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {blogArticles.map((post) => (
-                <Link
+                <Card
                   key={post.slug}
-                  href={`/articles/${post.slug}`}
-                  className="block rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-5"
+                  className="rounded-[1.4rem] border-white/10 bg-black/20 shadow-none"
                 >
+                  <Link href={`/articles/${post.slug}`} className="block">
+                    <CardContent className="px-5 py-5">
                   <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--accent)]">
                     {post.type}
                   </p>
@@ -216,10 +227,13 @@ export default function Home() {
                     {post.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{post.note}</p>
-                </Link>
+                    </CardContent>
+                  </Link>
+                </Card>
               ))}
             </div>
-          </div>
+            </CardContent>
+          </Card>
         </section>
 
         <section id="coming-next" className="mt-20">
@@ -238,12 +252,14 @@ export default function Home() {
 
           <div className="grid gap-4 lg:grid-cols-2">
             {plannedSeries.map((item) => (
-              <div
+              <Card
                 key={item}
-                className="glass-panel rounded-[1.6rem] px-5 py-5 text-base leading-7 text-[color:var(--text)]"
+                className="rounded-[1.6rem]"
               >
-                {item}
-              </div>
+                <CardContent className="px-5 py-5 text-base leading-7 text-[color:var(--text)]">
+                  {item}
+                </CardContent>
+              </Card>
             ))}
           </div>
         </section>

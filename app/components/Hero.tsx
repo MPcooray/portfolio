@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 const metrics = [
   { label: 'Disciplines', value: '3', detail: 'Code, engineering, swimming' },
@@ -46,18 +48,20 @@ export default function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <button
+            <Button
               onClick={() => scrollToSection('projects')}
-              className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950 shadow-[0_18px_45px_rgba(217,179,108,0.22)]"
+              size="lg"
+              className="shadow-[0_18px_45px_rgba(217,179,108,0.22)]"
             >
               Selected Work
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => scrollToSection('contact')}
-              className="rounded-full border border-[color:var(--border-strong)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[color:var(--text)]"
+              variant="outline"
+              size="lg"
             >
               Let&apos;s Connect
-            </button>
+            </Button>
           </div>
 
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
@@ -67,13 +71,17 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 * index, duration: 0.55 }}
-                className="glass-panel rounded-[1.75rem] p-5"
+                className="rounded-[1.75rem]"
               >
-                <p className="text-3xl font-semibold text-[color:var(--text)]">{metric.value}</p>
-                <p className="mt-3 text-sm uppercase tracking-[0.2em] text-[color:var(--accent)]">
-                  {metric.label}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{metric.detail}</p>
+                <Card className="rounded-[1.75rem]">
+                  <CardContent className="p-5">
+                    <p className="text-3xl font-semibold text-[color:var(--text)]">{metric.value}</p>
+                    <p className="mt-3 text-sm uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                      {metric.label}
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{metric.detail}</p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>

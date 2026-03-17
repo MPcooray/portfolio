@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { blogArticles } from '../articles'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 type Params = {
   params: Promise<{ slug: string }>
@@ -46,19 +50,39 @@ export default async function BlogArticlePage({ params }: Params) {
   return (
     <main className="section-shell min-h-screen px-4 pb-24 pt-32 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-5xl">
-        <span className="eyebrow">{article.type}</span>
-        <h1 className="section-title mt-6 max-w-[13ch] text-5xl font-semibold leading-[0.94] text-[color:var(--text)] sm:text-6xl">
-          {article.title}
-        </h1>
-        <p className="mt-6 text-sm uppercase tracking-[0.22em] text-[color:var(--muted)]">
-          {article.readTime}
-        </p>
-        <p className="mt-8 max-w-3xl text-lg leading-8 text-[color:var(--muted)]">
-          {article.excerpt}
-        </p>
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.76fr)] lg:items-start">
+          <div>
+            <span className="eyebrow">{article.type}</span>
+            <h1 className="section-title mt-6 max-w-[13ch] text-5xl font-semibold leading-[0.94] text-[color:var(--text)] sm:text-6xl">
+              {article.title}
+            </h1>
+            <p className="mt-6 text-sm uppercase tracking-[0.22em] text-[color:var(--muted)]">
+              {article.readTime}
+            </p>
+            <p className="mt-8 max-w-3xl text-lg leading-8 text-[color:var(--muted)]">
+              {article.excerpt}
+            </p>
+          </div>
+
+          {article.imageSrc ? (
+            <Card className="overflow-hidden rounded-[2rem] border-[color:var(--border-strong)]">
+              <CardContent className="p-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.4rem]">
+                  <Image
+                    src={article.imageSrc}
+                    alt={article.imageAlt ?? article.title}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ) : null}
+        </section>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <article className="glass-panel rounded-[2rem] p-8">
+          <Card className="rounded-[2rem]">
+            <CardContent className="p-8">
             <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
               Summary
             </p>
@@ -73,34 +97,39 @@ export default async function BlogArticlePage({ params }: Params) {
                 href={article.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-950"
+                className={cn(buttonVariants())}
               >
                 Read on Medium
               </a>
               <Link
                 href="/blog"
-                className="rounded-full border border-[color:var(--border-strong)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+                className={cn(buttonVariants({ variant: 'outline' }))}
               >
                 Back to Journal
               </Link>
             </div>
-          </article>
+            </CardContent>
+          </Card>
 
-          <aside className="glass-panel rounded-[2rem] p-8">
+          <Card className="rounded-[2rem]">
+            <CardContent className="p-8">
             <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
               Key takeaways
             </p>
             <div className="mt-6 space-y-4">
               {article.takeaways.map((takeaway) => (
-                <div
+                <Card
                   key={takeaway}
-                  className="rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-4"
+                  className="rounded-[1.4rem] border-white/10 bg-black/20 shadow-none"
                 >
+                  <CardContent className="px-5 py-4">
                   <p className="text-sm leading-7 text-[color:var(--text)]">{takeaway}</p>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </aside>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </main>

@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { blogArticles, mediumProfile } from './articles'
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 const featuredThemes = [
   {
@@ -60,7 +64,7 @@ export default function BlogPage() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/"
-                className="rounded-full border border-[color:var(--border-strong)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[color:var(--text)]"
+                className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
               >
                 Back to Portfolio
               </Link>
@@ -68,7 +72,7 @@ export default function BlogPage() {
                 href={mediumProfile}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950"
+                className={cn(buttonVariants({ size: 'lg' }))}
               >
                 Visit Medium
               </a>
@@ -76,14 +80,16 @@ export default function BlogPage() {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {writingSignals.map((signal) => (
-                <div key={signal.label} className="glass-panel rounded-[1.5rem] p-5">
+                <Card key={signal.label} className="rounded-[1.5rem]">
+                  <CardContent className="p-5">
                   <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
                     {signal.label}
                   </p>
                   <p className="mt-3 text-xl font-semibold text-[color:var(--text)]">
                     {signal.value}
                   </p>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
@@ -99,12 +105,7 @@ export default function BlogPage() {
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 {['Software systems', 'Artificial intelligence', 'Embedded thinking', 'Leadership', 'Swimming', 'Lessons learned'].map((topic) => (
-                  <span
-                    key={topic}
-                    className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
-                  >
-                    {topic}
-                  </span>
+                  <Badge key={topic}>{topic}</Badge>
                 ))}
               </div>
             </div>
@@ -122,7 +123,7 @@ export default function BlogPage() {
               </p>
               <a
                 href="/blog/microservice-architecture"
-                className="mt-6 inline-flex rounded-full border border-[color:var(--border-strong)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--text)]"
+                className={cn(buttonVariants({ variant: 'outline' }), 'mt-6')}
               >
                 Read Summary
               </a>
@@ -187,11 +188,12 @@ export default function BlogPage() {
             </p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {blogArticles.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="block rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-5"
-                >
+              <Card
+                key={post.slug}
+                className="rounded-[1.4rem] border-white/10 bg-black/20 shadow-none"
+              >
+                <Link href={`/blog/${post.slug}`} className="block">
+                <CardContent className="px-5 py-5">
                   <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--accent)]">
                     {post.type}
                   </p>
@@ -199,7 +201,9 @@ export default function BlogPage() {
                     {post.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{post.note}</p>
+                </CardContent>
                 </Link>
+              </Card>
               ))}
             </div>
           </div>

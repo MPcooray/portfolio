@@ -3,6 +3,11 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Badge } from '@/components/ui/badge'
 
 const details = [
   { label: 'Email', value: 'manulacooray@gmail.com', href: 'mailto:manulacooray@gmail.com' },
@@ -100,10 +105,11 @@ export default function Contact() {
 
             <div className="mt-10 space-y-4">
               {details.map((item) => (
-                <div
+                <Card
                   key={item.label}
-                  className="rounded-[1.4rem] border border-white/10 bg-black/20 px-5 py-4"
+                  className="rounded-[1.4rem] border-white/10 bg-black/20 shadow-none"
                 >
+                  <CardContent className="px-5 py-4">
                   <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]">
                     {item.label}
                   </p>
@@ -116,9 +122,7 @@ export default function Contact() {
                     >
                       {item.value}
                       {item.label === 'LinkedIn' && (
-                        <span className="rounded-full border border-[color:var(--border)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]">
-                          Open
-                        </span>
+                        <Badge variant="muted">Open</Badge>
                       )}
                     </a>
                   ) : (
@@ -127,7 +131,8 @@ export default function Contact() {
                   {'note' in item && item.note ? (
                     <p className="mt-2 text-sm text-[color:var(--muted)]">{item.note}</p>
                   ) : null}
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </motion.div>
@@ -146,7 +151,7 @@ export default function Contact() {
                 <label htmlFor="name" className="mb-2 block text-sm text-[color:var(--muted)]">
                   Name
                 </label>
-                <input
+                <Input
                   id="name"
                   name="name"
                   type="text"
@@ -154,7 +159,6 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   suppressHydrationWarning
-                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
                 />
               </div>
 
@@ -162,7 +166,7 @@ export default function Contact() {
                 <label htmlFor="email" className="mb-2 block text-sm text-[color:var(--muted)]">
                   Email
                 </label>
-                <input
+                <Input
                   id="email"
                   name="email"
                   type="email"
@@ -170,7 +174,6 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   suppressHydrationWarning
-                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
                 />
               </div>
 
@@ -178,7 +181,7 @@ export default function Contact() {
                 <label htmlFor="message" className="mb-2 block text-sm text-[color:var(--muted)]">
                   Message
                 </label>
-                <textarea
+                <Textarea
                   id="message"
                   name="message"
                   rows={6}
@@ -186,17 +189,16 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   suppressHydrationWarning
-                  className="w-full rounded-[1rem] border border-[color:var(--border)] bg-black/20 px-4 py-3 text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
                 disabled={isSending}
-                className="rounded-full bg-[color:var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950"
+                size="lg"
               >
                 {isSending ? 'Sending...' : 'Send Message'}
-              </button>
+              </Button>
 
               {status.type !== 'idle' && (
                 <div

@@ -7,6 +7,8 @@ export type BlogArticle = {
   excerpt: string
   readTime: string
   takeaways: string[]
+  imageSrc?: string
+  imageAlt?: string
 }
 
 export const mediumProfile = 'https://medium.com/@manulacooray'
@@ -21,6 +23,8 @@ export const blogArticles: BlogArticle[] = [
     excerpt:
       'This piece captures the moment a module that initially felt mathematical and distant became one of the most engaging parts of the degree experience.',
     readTime: '4 min read',
+    imageSrc: 'https://manulacooray.com/visualization.png',
+    imageAlt: 'Preview image for the graphics and visualization article',
     takeaways: [
       'Unexpected subjects can become turning points when approached with curiosity.',
       'Visualization changes how technical concepts are felt, not just understood.',
