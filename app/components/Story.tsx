@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { SectionReveal, TiltCard } from './InteractiveEffects'
 
 const milestones = [
   {
@@ -66,7 +67,7 @@ export default function Story() {
   return (
     <section id="story" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-14 max-w-3xl">
+        <SectionReveal className="mb-14 max-w-3xl">
           <span className="eyebrow">Story</span>
           <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
             A timeline shaped by discipline, leadership, and technical ambition.
@@ -76,55 +77,58 @@ export default function Story() {
             commitment to sport, growing responsibility in leadership, and a steady move toward
             engineering, computing, and AI.
           </p>
-        </div>
+        </SectionReveal>
 
         <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55 }}
-            className="glass-panel rounded-[2rem] p-8"
-          >
-            <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
-              The through-line
-            </p>
-            <p className="mt-5 text-base leading-8 text-[color:var(--text)]">
-              The same mindset shows up across everything I do: train consistently, raise the
-              standard, and take responsibility when it matters most.
-            </p>
-            <div className="mt-8 space-y-5">
-              <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
-                  Sport
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
-                  Competitive swimming built the discipline, patience, and resilience behind my
-                  work ethic.
-                </p>
+          <SectionReveal delay={0.05}>
+            <TiltCard className="glass-panel rounded-[2rem] p-8">
+              <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                The through-line
+              </p>
+              <p className="mt-5 text-base leading-8 text-[color:var(--text)]">
+                The same mindset shows up across everything I do: train consistently, raise the
+                standard, and take responsibility when it matters most.
+              </p>
+              <div className="mt-8 space-y-5">
+                <motion.div whileHover={{ x: 4 }} className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                  <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
+                    Sport
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
+                    Competitive swimming built the discipline, patience, and resilience behind my
+                    work ethic.
+                  </p>
+                </motion.div>
+                <motion.div whileHover={{ x: 4 }} className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                  <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
+                    Leadership
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
+                    From junior leadership roles to university sports leadership, I learned how to
+                    represent people, not just positions.
+                  </p>
+                </motion.div>
+                <motion.div whileHover={{ x: 4 }} className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                  <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
+                    Technology
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
+                    My technical path grew from engineering fundamentals into software systems and now
+                    toward AI-driven work.
+                  </p>
+                </motion.div>
               </div>
-              <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
-                  Leadership
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
-                  From junior leadership roles to university sports leadership, I learned how to
-                  represent people, not just positions.
-                </p>
-              </div>
-              <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--muted)]">
-                  Technology
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">
-                  My technical path grew from engineering fundamentals into software systems and now
-                  toward AI-driven work.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            </TiltCard>
+          </SectionReveal>
 
           <div className="glass-panel rounded-[2rem] p-8">
             <div className="relative ml-2 border-l border-[color:var(--border-strong)] pl-8">
+              <motion.div
+                className="absolute bottom-0 left-0 top-0 w-px origin-top bg-gradient-to-b from-[color:var(--accent)] via-[color:var(--accent)]/60 to-transparent"
+                initial={{ scaleY: 0 }}
+                animate={inView ? { scaleY: 1 } : {}}
+                transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              />
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={`${milestone.year}-${milestone.title}`}
@@ -133,7 +137,11 @@ export default function Story() {
                   transition={{ duration: 0.45, delay: index * 0.06 }}
                   className="relative pb-10 last:pb-0"
                 >
-                  <span className="absolute -left-[2.55rem] top-1 h-4 w-4 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--accent)]" />
+                  <motion.span
+                    className="absolute -left-[2.55rem] top-1 h-4 w-4 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--accent)]"
+                    animate={{ scale: [1, 1.18, 1], boxShadow: ['0 0 0 rgba(217,179,108,0)', '0 0 18px rgba(217,179,108,0.28)', '0 0 0 rgba(217,179,108,0)'] }}
+                    transition={{ duration: 2.6, repeat: Infinity, delay: index * 0.12, ease: 'easeInOut' }}
+                  />
                   <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
                     {milestone.year}
                   </p>

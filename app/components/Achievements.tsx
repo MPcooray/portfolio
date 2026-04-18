@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
+import { SectionReveal, TiltCard } from './InteractiveEffects'
 
 const swimming = [
   'South Asian Age Group Championship 2016, 3rd place',
@@ -28,21 +29,23 @@ export default function Achievements() {
       <div className="relative mx-auto max-w-7xl">
         <div className="glass-panel relative overflow-hidden rounded-[2.25rem] p-6 sm:p-8 lg:p-10">
           <div className="absolute inset-0">
-            <Image
-              src="/swim1.jpg"
-              alt="Manula competing in swimming"
-              fill
-              className="object-cover opacity-20"
-            />
+            <motion.div
+              className="absolute inset-0"
+              animate={{ scale: [1, 1.04, 1], y: [0, -10, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <Image
+                src="/swim1.jpg"
+                alt="Manula competing in swimming"
+                fill
+                className="object-cover opacity-20"
+              />
+            </motion.div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#0b1116] via-[#0b1116]/92 to-[#0b1116]/70" />
           </div>
 
           <div className="relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55 }}
-            >
+            <SectionReveal>
               <span className="eyebrow">Results and leadership</span>
               <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
                 Performance built long before race day.
@@ -52,10 +55,11 @@ export default function Achievements() {
                 responsibility of leading by example. That same mindset shapes how I learn, build,
                 and collaborate.
               </p>
-            </motion.div>
+            </SectionReveal>
 
             <div className="grid gap-6">
-              <motion.div
+              <TiltCard>
+                <motion.div
                 initial={{ opacity: 0, x: 28 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -72,9 +76,11 @@ export default function Achievements() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
 
-              <motion.div
+              <TiltCard>
+                <motion.div
                 initial={{ opacity: 0, x: 28 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -91,7 +97,8 @@ export default function Achievements() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
             </div>
           </div>
         </div>

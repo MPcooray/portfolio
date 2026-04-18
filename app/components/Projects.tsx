@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { SectionReveal, SpotlightCard, TiltCard } from './InteractiveEffects'
 
 const projects = [
   {
@@ -57,7 +58,7 @@ export default function Projects() {
   return (
     <section id="projects" ref={ref} className="section-shell px-4 py-24 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionReveal className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <span className="eyebrow">Selected work</span>
             <h2 className="section-title mt-6 text-4xl font-semibold text-[color:var(--text)] sm:text-5xl">
@@ -69,45 +70,58 @@ export default function Projects() {
             blending technical depth with usability, and building things that stay reliable under
             pressure.
           </p>
-        </div>
+        </SectionReveal>
 
         <div className="grid gap-6 lg:grid-cols-2">
           {projects.map((project, index) => (
-            <motion.button
+            <motion.div
               key={project.id}
-              type="button"
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              onClick={() => setSelectedProject(project)}
-              className="glass-panel group rounded-[2rem] p-7 text-left"
             >
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                  {project.year}
-                </span>
-                <span className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]">
-                  Tap for details
-                </span>
-              </div>
-              <h3 className="mt-6 text-2xl font-semibold text-[color:var(--text)]">
-                {project.title}
-              </h3>
-              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
-                {project.summary}
-              </p>
-              <p className="mt-5 text-sm leading-7 text-[color:var(--text)]">{project.impact}</p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.stack.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/20 px-3 py-2 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]"
+              <TiltCard className="h-full rounded-[2rem]">
+                <SpotlightCard className="glass-panel group h-full rounded-[2rem]">
+                  <motion.button
+                    type="button"
+                    onClick={() => setSelectedProject(project)}
+                    whileHover={{ y: -4 }}
+                    className="h-full w-full rounded-[2rem] p-7 text-left"
                   >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.button>
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                        {project.year}
+                      </span>
+                      <motion.span
+                        className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]"
+                        initial={{ x: 0 }}
+                        whileHover={{ x: 6 }}
+                      >
+                        Tap for details
+                      </motion.span>
+                    </div>
+                    <h3 className="mt-6 text-2xl font-semibold text-[color:var(--text)]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
+                      {project.summary}
+                    </p>
+                    <p className="mt-5 text-sm leading-7 text-[color:var(--text)]">{project.impact}</p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {project.stack.map((item) => (
+                        <motion.span
+                          key={item}
+                          whileHover={{ y: -2 }}
+                          className="rounded-full border border-white/10 bg-black/20 px-3 py-2 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]"
+                        >
+                          {item}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.button>
+                </SpotlightCard>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
 

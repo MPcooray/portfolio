@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { SectionReveal, TiltCard } from './InteractiveEffects'
 
 const pillars = [
   {
@@ -75,24 +76,27 @@ export default function About() {
             </p>
             <div className="grid gap-4">
               {pillars.map((pillar, index) => (
-                <motion.div
+                <TiltCard
                   key={pillar.title}
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.45, delay: 0.12 * index }}
                   className="glass-panel rounded-[1.5rem] p-5"
                 >
-                  <p className="text-sm uppercase tracking-[0.22em] text-[color:var(--accent)]">
-                    {pillar.title}
-                  </p>
-                  <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">{pillar.text}</p>
-                </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.45, delay: 0.12 * index }}
+                  >
+                    <p className="text-sm uppercase tracking-[0.22em] text-[color:var(--accent)]">
+                      {pillar.title}
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-[color:var(--text)]">{pillar.text}</p>
+                  </motion.div>
+                </TiltCard>
               ))}
             </div>
           </div>
 
           <div className="grid gap-6">
-            <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
+            <SectionReveal className="glass-panel rounded-[2rem] p-6 sm:p-8" delay={0.08}>
               <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.24em] text-[color:var(--muted)]">
@@ -128,9 +132,9 @@ export default function About() {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </SectionReveal>
 
-            <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
+            <SectionReveal className="glass-panel rounded-[2rem] p-6 sm:p-8" delay={0.16}>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <h3 className="text-2xl font-semibold text-[color:var(--text)]">
                   Tools and strengths
@@ -140,16 +144,20 @@ export default function About() {
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                {capabilities.map((capability) => (
-                  <span
+                {capabilities.map((capability, index) => (
+                  <motion.span
                     key={capability}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.35, delay: 0.02 * index }}
+                    whileHover={{ y: -3, scale: 1.03 }}
                     className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
                   >
                     {capability}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
-            </div>
+            </SectionReveal>
           </div>
         </motion.div>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export function MouseGlow() {
@@ -96,7 +96,7 @@ export function MagneticButton({ children, className, ...props }: any) {
   const xSpring = useSpring(x, { damping: 15, stiffness: 150 })
   const ySpring = useSpring(y, { damping: 15, stiffness: 150 })
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
@@ -105,7 +105,7 @@ export function MagneticButton({ children, className, ...props }: any) {
   }
 
   return (
-    <motion.button
+    <motion.div
       className={className}
       style={{ x: xSpring, y: ySpring }}
       onMouseMove={handleMouseMove}
@@ -116,7 +116,7 @@ export function MagneticButton({ children, className, ...props }: any) {
       {...props}
     >
       {children}
-    </motion.button>
+    </motion.div>
   )
 }
 
@@ -150,5 +150,160 @@ export function TiltCard({ children, className, ...props }: any) {
     >
       {children}
     </motion.div>
+  )
+}
+
+export function SectionReveal({
+  children,
+  className,
+  delay = 0,
+  distance = 28,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  distance?: number
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: distance }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export function FloatingOrb({
+  className,
+  duration = 7,
+}: {
+  className?: string
+  duration?: number
+}) {
+  return (
+    <motion.div
+      aria-hidden="true"
+      className={className}
+      animate={{
+        y: [0, -16, 0, 10, 0],
+        x: [0, 10, -8, 0],
+        scale: [1, 1.05, 0.98, 1],
+      }}
+      transition={{
+        duration,
+        ease: 'easeInOut',
+        repeat: Infinity,
+      }}
+    />
+  )
+}
+
+export function ScrollCue() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 1 }}
+      className="mt-12 flex items-center gap-3 text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]"
+    >
+      <span>Scroll to explore</span>
+      <span className="relative flex h-10 w-6 items-start justify-center rounded-full border border-[color:var(--border-strong)]">
+        <motion.span
+          className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"
+          animate={{ y: [0, 12, 0], opacity: [0.9, 0.35, 0.9] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </span>
+    </motion.div>
+  )
+}
+
+export function SpotlightCard({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const x = useMotionValue(50)
+  const y = useMotionValue(50)
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      onMouseMove={(event) => {
+        const rect = ref.current?.getBoundingClientRect()
+        if (!rect) return
+        x.set(((event.clientX - rect.left) / rect.width) * 100)
+        y.set(((event.clientY - rect.top) / rect.height) * 100)
+      }}
+      style={{
+        backgroundImage:
+          'radial-gradient(circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(217,179,108,0.12), transparent 34%)',
+        ['--spotlight-x' as string]: x,
+        ['--spotlight-y' as string]: y,
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export function TypewriterText({
+  text,
+  className,
+  speed = 36,
+  startDelay = 250,
+}: {
+  text: string
+  className?: string
+  speed?: number
+  startDelay?: number
+}) {
+  const [displayed, setDisplayed] = useState('')
+
+  useEffect(() => {
+    setDisplayed('')
+    let interval: number | undefined
+
+    const startTimer = window.setTimeout(() => {
+      let index = 0
+
+      interval = window.setInterval(() => {
+        index += 1
+        setDisplayed(text.slice(0, index))
+
+        if (index >= text.length) {
+          window.clearInterval(interval)
+        }
+      }, speed)
+    }, startDelay)
+
+    return () => {
+      window.clearTimeout(startTimer)
+      if (interval) window.clearInterval(interval)
+    }
+  }, [speed, startDelay, text])
+
+  const isComplete = displayed.length >= text.length
+
+  return (
+    <span className={className}>
+      {displayed}
+      <motion.span
+        aria-hidden="true"
+        className="ml-[0.04em] inline-block text-[color:var(--accent)]"
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {isComplete ? '' : '|'}
+      </motion.span>
+    </span>
   )
 }
