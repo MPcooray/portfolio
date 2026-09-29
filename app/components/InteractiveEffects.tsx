@@ -47,9 +47,9 @@ export function MouseGlow() {
       animate={{ scale: 1, opacity: 0.35 }}
       transition={{ type: 'spring', stiffness: 140, damping: 18 }}
     >
-      <div className="h-80 w-80 rounded-full bg-[rgba(217,179,108,0.18)] blur-3xl" />
+      <div className="h-80 w-80 rounded-full bg-[rgba(93,255,177,0.12)] blur-3xl" />
       <motion.div
-        className="absolute inset-0 h-56 w-56 rounded-full bg-[rgba(75,106,92,0.16)] blur-2xl"
+        className="absolute inset-0 h-56 w-56 rounded-full bg-[rgba(31,138,82,0.16)] blur-2xl"
         animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
         transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
       />
@@ -245,7 +245,7 @@ export function SpotlightCard({
       }}
       style={{
         backgroundImage:
-          'radial-gradient(circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(217,179,108,0.12), transparent 34%)',
+          'radial-gradient(circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(93,255,177,0.1), transparent 34%)',
         ['--spotlight-x' as string]: x,
         ['--spotlight-y' as string]: y,
       }}

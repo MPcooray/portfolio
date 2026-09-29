@@ -58,11 +58,30 @@ export default function Navbar() {
     const element = document.getElementById(sectionId)
     if (!element) return
 
-    const offset = 92
+    const offset = 128
     const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top: Math.max(0, elementPosition), behavior: 'smooth' })
     setActiveSection(sectionId)
     setIsOpen(false)
+  }
+
+  const signal = (action: 'logout' | 'scanlines' | 'zoom') => {
+    if (action === 'zoom') {
+      if (!document.fullscreenElement) {
+        void document.documentElement.requestFullscreen?.().catch(() => {
+          window.dispatchEvent(new CustomEvent('mac-terminal', { detail: { action: 'zoom-failed' } }))
+        })
+      } else {
+        void document.exitFullscreen?.()
+      }
+      return
+    }
+
+    if (action === 'scanlines') {
+      document.body.classList.toggle('scanlines-off')
+    }
+
+    window.dispatchEvent(new CustomEvent('mac-terminal', { detail: { action } }))
   }
 
   return (
@@ -70,67 +89,60 @@ export default function Navbar() {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.45 }}
-      className="fixed inset-x-0 top-0 z-[100]"
+      className={`fixed inset-x-0 top-0 z-[100] border-b border-[color:var(--border)] bg-[#07140f] ${
+        scrolled ? 'shadow-[0_12px_40px_rgba(0,0,0,0.28)]' : ''
+      }`}
     >
-      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-        <div
-          className={`rounded-full border px-4 py-3 transition-all duration-300 md:px-6 ${
-            scrolled
-              ? 'glass-panel border-[color:var(--border-strong)]'
-              : 'border-transparent bg-transparent'
-          }`}
-        >
-          <div className="flex items-center justify-between gap-4">
-            <button
-              onClick={() => scrollToSection('home')}
-              className="text-left"
-              aria-label="Scroll to top"
-            >
-              <span className="block text-xs uppercase tracking-[0.35em] text-[color:var(--muted)]">
-                Manula Cooray
-              </span>
-              <span className="block text-sm font-medium text-[color:var(--text)]">
-                Athlete Engineer
-              </span>
-            </button>
-
-            <div className="hidden items-center gap-2 md:flex">
-              {navItems.map((item) => (
-                <NavItem
-                  key={item.id}
-                  item={item}
-                  activeSection={activeSection}
-                  pathname={pathname}
-                  onSectionClick={scrollToSection}
-                />
-              ))}
-            </div>
-
-            <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] text-[color:var(--text)] md:hidden"
-              onClick={() => setIsOpen((value) => !value)}
-              aria-label="Toggle navigation"
-            >
-              <span className="text-lg">{isOpen ? '×' : '≡'}</span>
-            </button>
-          </div>
-
-          {isOpen && (
-            <div className="mt-4 space-y-2 border-t border-white/10 pt-4 md:hidden">
-              {navItems.map((item) => (
-                <MobileNavItem
-                  key={item.id}
-                  item={item}
-                  activeSection={activeSection}
-                  pathname={pathname}
-                  onSectionClick={scrollToSection}
-                  onClose={() => setIsOpen(false)}
-                />
-              ))}
-            </div>
-          )}
+      <div className="mac-titlebar">
+        <div className="mac-lights" aria-label="Window controls">
+          <button type="button" className="mac-dot mac-dot-close" aria-label="Close session" onClick={() => signal('logout')}>
+            <span aria-hidden="true">×</span>
+          </button>
+          <button type="button" className="mac-dot mac-dot-min" aria-label="Toggle scanlines" onClick={() => signal('scanlines')}>
+            <span aria-hidden="true">−</span>
+          </button>
+          <button type="button" className="mac-dot mac-dot-zoom" aria-label="Toggle fullscreen" onClick={() => signal('zoom')}>
+            <span aria-hidden="true">+</span>
+          </button>
         </div>
+        <p className="mac-title">
+          <span className="sm:hidden">zsh — portfolio</span>
+          <span className="hidden sm:inline">zsh — manula@portfolio</span>
+        </p>
+        <button
+          className="ml-auto inline-flex h-8 items-center border border-[color:var(--border)] px-3 text-xs text-[color:var(--accent)] md:hidden"
+          onClick={() => setIsOpen((value) => !value)}
+          aria-label="Toggle navigation"
+        >
+          {isOpen ? '[ close ]' : '[ menu ]'}
+        </button>
       </div>
+      <div className="mx-auto hidden max-w-7xl items-center gap-1 px-4 py-2 md:flex lg:px-8">
+        {navItems.map((item) => (
+          <NavItem
+            key={item.id}
+            item={item}
+            activeSection={activeSection}
+            pathname={pathname}
+            onSectionClick={scrollToSection}
+          />
+        ))}
+      </div>
+
+      {isOpen && (
+        <div className="space-y-1 border-t border-[color:var(--border)] px-4 py-3 md:hidden">
+          {navItems.map((item) => (
+            <MobileNavItem
+              key={item.id}
+              item={item}
+              activeSection={activeSection}
+              pathname={pathname}
+              onSectionClick={scrollToSection}
+              onClose={() => setIsOpen(false)}
+            />
+          ))}
+        </div>
+      )}
     </motion.nav>
   )
 }
@@ -141,7 +153,8 @@ function isActiveItem(
   activeSection: string
 ) {
   if (item.type === 'route') {
-    return pathname === item.href
+    const path = pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname
+    return path === item.href
   }
 
   return pathname === '/' && activeSection === item.id
@@ -159,24 +172,13 @@ function NavItem({
   onSectionClick: (sectionId: string) => void
 }) {
   const active = isActiveItem(item, pathname, activeSection)
-  const classes = `relative rounded-full px-4 py-2 text-sm ${
+  const classes = `relative px-3 py-2 text-sm ${
     active
-      ? 'text-[color:var(--text)]'
+      ? 'text-[color:var(--accent)]'
       : 'text-[color:var(--muted)] hover:text-[color:var(--text)]'
   }`
 
-  const content = (
-    <>
-      {active && (
-        <motion.span
-          layoutId="nav-pill"
-          className="absolute inset-0 rounded-full border border-[color:var(--border-strong)] bg-white/5"
-          transition={{ type: 'spring', stiffness: 380, damping: 34 }}
-        />
-      )}
-      <span className="relative z-10">{item.label}</span>
-    </>
-  )
+  const content = <span className="relative z-10">{active ? `[ ${item.label} ]` : item.label}</span>
 
   if (item.type === 'route') {
     return (
@@ -207,14 +209,14 @@ function MobileNavItem({
   onClose: () => void
 }) {
   const active = isActiveItem(item, pathname, activeSection)
-  const classes = `block w-full rounded-2xl px-4 py-3 text-left text-sm ${
-    active ? 'bg-white/10 text-[color:var(--text)]' : 'text-[color:var(--muted)]'
+  const classes = `block w-full px-3 py-2 text-left text-sm ${
+    active ? 'text-[color:var(--accent)]' : 'text-[color:var(--muted)]'
   }`
 
   if (item.type === 'route') {
     return (
       <Link href={item.href} className={classes} onClick={onClose}>
-        {item.label}
+        {active ? `[ ${item.label} ]` : item.label}
       </Link>
     )
   }
@@ -227,7 +229,7 @@ function MobileNavItem({
       }}
       className={classes}
     >
-      {item.label}
+      {active ? `[ ${item.label} ]` : item.label}
     </button>
   )
 }

@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="section-shell min-h-screen px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+    <main className="section-shell min-h-screen px-4 pb-28 pt-36 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-7xl">
         <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>

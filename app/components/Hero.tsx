@@ -47,14 +47,14 @@ export default function Hero() {
     const element = document.getElementById(sectionId)
     if (!element) return
 
-    const top = element.getBoundingClientRect().top + window.scrollY - 88
+    const top = element.getBoundingClientRect().top + window.scrollY - 128
     window.scrollTo({ top, behavior: 'smooth' })
   }
 
   return (
     <section
       id="home"
-      className="section-shell relative flex min-h-screen items-center overflow-hidden px-4 pb-16 pt-32 sm:px-6 lg:px-8"
+      className="section-shell relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-36 sm:px-6 lg:px-8"
     >
       <div className="absolute inset-0">
         <FloatingOrb className="absolute left-[12%] top-28 h-72 w-72 rounded-full bg-[color:var(--accent)]/10 blur-3xl" />
@@ -77,6 +77,9 @@ export default function Hero() {
           transition={{ duration: 0.7 }}
           className="max-w-[48rem] pt-4 lg:pt-12"
         >
+          <p className="mb-6 text-sm text-[color:var(--muted)]">
+            <span className="text-[color:var(--accent)]">[ ok ]</span> session ready.
+          </p>
           <span className="eyebrow">Modern athlete-engineer</span>
           <div className="mt-6 min-h-[2.5rem]">
             <motion.p
@@ -90,7 +93,7 @@ export default function Hero() {
               {identityLines[activeIdentity]}
             </motion.p>
           </div>
-          <h1 className="section-title mt-4 max-w-[9ch] text-5xl font-semibold leading-[0.92] tracking-[-0.05em] text-[color:var(--text)] sm:text-6xl lg:text-[6rem]">
+          <h1 className="section-title mt-4 max-w-[18ch] text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-[color:var(--text)] sm:text-5xl lg:text-6xl">
             <TypewriterText text="Systems, built with standards." />
           </h1>
           <p className="mt-7 max-w-[34rem] text-base leading-8 text-[color:var(--muted)] sm:text-lg">
@@ -117,7 +120,7 @@ export default function Hero() {
               <Button
                 onClick={() => scrollToSection('projects')}
                 size="lg"
-                className="shadow-[0_18px_45px_rgba(217,179,108,0.22)]"
+                className="shadow-[0_0_24px_rgba(93,255,177,0.18)]"
               >
                 Selected Work
               </Button>

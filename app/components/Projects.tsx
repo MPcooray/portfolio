@@ -199,7 +199,7 @@ export default function Projects() {
                         href={selectedProject.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-full bg-[color:var(--accent)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-950"
+                        className="border border-[color:var(--accent)] bg-[color:var(--accent)] px-5 py-3 text-sm font-medium text-[color:var(--ink)]"
                       >
                         Watch Demo
                       </a>

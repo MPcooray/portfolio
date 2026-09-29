@@ -139,7 +139,7 @@ export default function Story() {
                 >
                   <motion.span
                     className="absolute -left-[2.55rem] top-1 h-4 w-4 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--accent)]"
-                    animate={{ scale: [1, 1.18, 1], boxShadow: ['0 0 0 rgba(217,179,108,0)', '0 0 18px rgba(217,179,108,0.28)', '0 0 0 rgba(217,179,108,0)'] }}
+                    animate={{ scale: [1, 1.18, 1], boxShadow: ['0 0 0 rgba(93,255,177,0)', '0 0 18px rgba(93,255,177,0.35)', '0 0 0 rgba(93,255,177,0)'] }}
                     transition={{ duration: 2.6, repeat: Infinity, delay: index * 0.12, ease: 'easeInOut' }}
                   />
                   <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--accent)]">

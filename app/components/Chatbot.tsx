@@ -10,44 +10,12 @@ interface Message {
   timestamp: Date
 }
 
-const knowledge = {
-  summary:
-    'Manula Cooray is a Sri Lankan athlete-engineer whose journey combines software, engineering, leadership, and competitive swimming.',
-  education: [
-    'BSc (Hons) in Computer Science at SLIIT',
-    'BEng (Hons) in Electrical and Electronic Engineering at the University of the West of England, completed with a second lower degree',
-    'MSc in Artificial Intelligence started in 2025 and continues through 2026 at Anglia Ruskin University',
-  ],
-  timeline: [
-    'Ananda College from 2008 to 2022',
-    'Junior Prefect in 2012',
-    'Swimming Junior Vice Captain in 2019',
-    'Swimming Captain in 2020',
-    'SLIIT Swimming Vice Captain in 2024',
-    'SLIIT Swimming Captain in 2025',
-    'SLIIT Sports Council President in 2025',
-  ],
-  projects: [
-    'Hospital Laboratory Management System using React or Next.js, Spring Boot, and PostgreSQL',
-    'AI-powered medical symptom checker with symptom search, diagnosis prediction, guidance, and nearby doctor discovery',
-    'Vehicle detection system using ultrasonic sensors, LCD displays, LEDs, and buzzer alerts',
-    'Noise reduction filter for digital signal processing work',
-    'Control system design involving plant modelling, controller design, and simulation',
-    'Cloud and systems work with AWS EC2, SSH, SFTP, SCP, rsync, and OpenMP',
-  ],
-  strengths: [
-    'discipline from competitive swimming',
-    'leadership built through school and university sports roles',
-    'interest in software systems, embedded thinking, AI, and technical problem solving',
-    'public speaking, team leadership, and event coordination',
-  ],
-}
-
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
+  const [isSending, setIsSending] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -66,99 +34,8 @@ export default function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const getBotResponse = (userMessage: string): string => {
-    const message = userMessage.toLowerCase().trim()
-
-    if (
-      message.includes('who are you') ||
-      message.includes('who is manula') ||
-      message.includes('about manula') ||
-      message.includes('tell me about')
-    ) {
-      return (
-        `${knowledge.summary}\n\n` +
-        'He combines technical ambition with athletic discipline and has grown through leadership roles from school into university.'
-      )
-    }
-
-    if (
-      message.includes('education') ||
-      message.includes('qualification') ||
-      message.includes('degree') ||
-      message.includes('study') ||
-      message.includes('msc') ||
-      message.includes('uwe')
-    ) {
-      return `Manula's education includes:\n\n• ${knowledge.education.join('\n• ')}`
-    }
-
-    if (
-      message.includes('story') ||
-      message.includes('journey') ||
-      message.includes('timeline') ||
-      message.includes('background')
-    ) {
-      return `Here is a quick view of Manula's journey:\n\n• ${knowledge.timeline.join('\n• ')}`
-    }
-
-    if (
-      message.includes('swimming') ||
-      message.includes('sport') ||
-      message.includes('captain') ||
-      message.includes('president') ||
-      message.includes('leadership') ||
-      message.includes('achievement')
-    ) {
-      return (
-        'Sport is a major part of Manula’s story. He progressed from school swimming leadership at Ananda College to SLIIT Swimming Vice Captain in 2024, Swimming Captain in 2025, and Sports Council President in 2025.'
-      )
-    }
-
-    if (
-      message.includes('project') ||
-      message.includes('work') ||
-      message.includes('system') ||
-      message.includes('build') ||
-      message.includes('technical')
-    ) {
-      return `Some of Manula's technical work includes:\n\n• ${knowledge.projects.join('\n• ')}`
-    }
-
-    if (
-      message.includes('skill') ||
-      message.includes('strength') ||
-      message.includes('personality') ||
-      message.includes('character')
-    ) {
-      return `Manula's strengths include:\n\n• ${knowledge.strengths.join('\n• ')}`
-    }
-
-    if (
-      message.includes('job') ||
-      message.includes('career') ||
-      message.includes('role') ||
-      message.includes('interested')
-    ) {
-      return (
-        'Manula is especially interested in software engineering, AI-related work, embedded or systems-oriented roles, and opportunities where leadership, discipline, and technical depth matter.'
-      )
-    }
-
-    if (message.match(/^(hi|hello|hey|good morning|good afternoon|good evening)/)) {
-      return 'Hello. You can ask me about Manula’s story, education, projects, swimming journey, leadership roles, or career direction.'
-    }
-
-    if (message.match(/(thank|thanks)/)) {
-      return 'Happy to help. Ask anything else you want to know about Manula.'
-    }
-
-    return (
-      "I can help with Manula's story, education, projects, swimming background, leadership roles, and career direction."
-    )
-  }
-
-  const handleSend = () => {
-    if (!input.trim()) return
+  const handleSend = async () => {
+    if (!input.trim() || isSending) return
 
     const currentInput = input
     const userMessage: Message = {
@@ -170,16 +47,43 @@ export default function Chatbot() {
 
     setMessages((previous) => [...previous, userMessage])
     setInput('')
+    setIsSending(true)
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentInput }),
+      })
+
+      const data = await response.json()
+
       const botResponse: Message = {
-        id: messages.length + 2,
-        text: getBotResponse(currentInput),
+        id: userMessage.id + 1,
+        text:
+          typeof data?.text === 'string' && data.text.trim()
+            ? data.text
+            : data?.error || 'The assistant could not answer right now. Please try again.',
         sender: 'bot',
         timestamp: new Date(),
       }
+
       setMessages((previous) => [...previous, botResponse])
-    }, 350)
+    } catch {
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: userMessage.id + 1,
+          text: 'The assistant could not connect right now. Please try again in a moment.',
+          sender: 'bot',
+          timestamp: new Date(),
+        },
+      ])
+    } finally {
+      setIsSending(false)
+    }
   }
 
   if (!mounted) return null
@@ -188,29 +92,12 @@ export default function Chatbot() {
     <>
       <motion.button
         onClick={() => setIsOpen((value) => !value)}
-        className="fixed bottom-6 right-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--border-strong)] bg-[rgba(15,23,31,0.94)] text-[color:var(--text)] shadow-[0_18px_50px_rgba(0,0,0,0.28)]"
+        className="fixed bottom-1 right-2 z-[100] flex h-8 items-center justify-center border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-3 text-xs text-[color:var(--accent)]"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.96 }}
         aria-label="Open chatbot"
       >
-        {isOpen ? (
-          <span className="text-xl leading-none">×</span>
-        ) : (
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M8 10h8" />
-            <path d="M8 14h5" />
-            <path d="M12 3C7.582 3 4 6.134 4 10c0 2.07 1.027 3.93 2.66 5.211V20l3.064-2.043c.738.18 1.497.272 2.276.272 4.418 0 8-3.134 8-7s-3.582-8-8-8Z" />
-          </svg>
-        )}
+        <span>{isOpen ? '[ close ]' : '[ ask ]'}</span>
       </motion.button>
 
       <AnimatePresence>
@@ -219,14 +106,14 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 18, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.98 }}
-            className="fixed bottom-24 right-4 z-[9999] flex h-[500px] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.75rem] border border-[color:var(--border-strong)] bg-[rgba(13,19,25,0.96)] shadow-[0_28px_80px_rgba(0,0,0,0.38)] backdrop-blur-xl"
+            className="fixed bottom-[7.5rem] right-4 z-[100] flex h-[min(500px,calc(100vh-10rem))] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden border border-[color:var(--border-strong)] border-t-2 border-t-[color:var(--accent)] bg-[color:var(--surface-strong)] shadow-[0_28px_80px_rgba(0,0,0,0.38)]"
           >
             <div className="border-b border-white/10 px-5 py-4">
               <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--muted)]">
                 Manula&apos;s Assistant
               </p>
               <p className="mt-2 text-sm text-[color:var(--text)]">
-                Quick answers about story, studies, projects, sport, and leadership.
+                AI-powered answers about story, studies, projects, sport, and leadership.
               </p>
             </div>
 
@@ -237,16 +124,32 @@ export default function Chatbot() {
                   className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-7 ${
+                    className={`max-w-[85%] border px-4 py-3 text-sm leading-7 ${
                       message.sender === 'user'
-                        ? 'bg-[var(--accent)] text-slate-950'
-                        : 'bg-white/6 text-[color:var(--text)]'
+                        ? 'border-[color:var(--accent)] bg-[color:var(--accent)] text-[color:var(--ink)]'
+                        : 'border-[color:var(--border)] bg-black/30 text-[color:var(--text)]'
                     }`}
                   >
                     <p className="whitespace-pre-line">{message.text}</p>
                   </div>
                 </div>
               ))}
+              {isSending && (
+                <div className="flex justify-start">
+                  <div className="max-w-[85%] border border-[color:var(--border)] bg-black/30 px-4 py-3 text-sm leading-7 text-[color:var(--text)]">
+                    <motion.div
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0.5 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
+                    >
+                      <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
+                      <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]/80" />
+                      <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]/60" />
+                    </motion.div>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
 
@@ -263,13 +166,15 @@ export default function Chatbot() {
                     }
                   }}
                   placeholder="Ask about Manula"
-                  className="flex-1 rounded-full border border-[color:var(--border)] bg-black/20 px-4 py-3 text-sm text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
+                  className="flex-1 border border-[color:var(--border)] bg-black/40 px-4 py-3 font-[family-name:var(--font-geist-mono)] text-sm text-[color:var(--text)] outline-none focus:border-[color:var(--accent)]"
+                  disabled={isSending}
                 />
                 <button
                   onClick={handleSend}
-                  className="rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-slate-950"
+                  disabled={isSending}
+                  className="border border-[color:var(--accent)] bg-[color:var(--accent)] px-4 py-3 text-sm text-[color:var(--ink)]"
                 >
-                  Send
+                  {isSending ? '...' : 'Send'}
                 </button>
               </div>
             </div>

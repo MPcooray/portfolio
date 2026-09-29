@@ -4,6 +4,9 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import { MouseGlow, ScrollProgress } from "./components/InteractiveEffects";
 import Chatbot from "./components/Chatbot";
+import TerminalStatus from "./components/TerminalStatus";
+import PortfolioShell from "./components/PortfolioShell";
+import BootSequence from "./components/BootSequence";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -63,14 +66,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} terminal-theme antialiased`}
         suppressHydrationWarning
       >
+        <div className="terminal-vignette" aria-hidden="true" />
+        <div className="terminal-scanlines" aria-hidden="true" />
         <MouseGlow />
         <ScrollProgress />
         <Navbar />
         {children}
         <Chatbot />
+        <PortfolioShell />
+        <TerminalStatus />
+        <BootSequence />
       </body>
     </html>
   );

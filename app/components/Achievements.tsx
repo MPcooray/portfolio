@@ -41,7 +41,7 @@ export default function Achievements() {
                 className="object-cover opacity-20"
               />
             </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0b1116] via-[#0b1116]/92 to-[#0b1116]/70" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#07140f] via-[#07140f]/92 to-[#07140f]/70" />
           </div>
 
           <div className="relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">

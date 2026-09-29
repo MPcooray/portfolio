@@ -48,7 +48,7 @@ export default async function BlogArticlePage({ params }: Params) {
   }
 
   return (
-    <main className="section-shell min-h-screen px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+    <main className="section-shell min-h-screen px-4 pb-28 pt-36 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-5xl">
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.76fr)] lg:items-start">
           <div>
