@@ -285,6 +285,44 @@ textarea {
   pointer-events: none;
 }
 
+@media (max-width: 767px) {
+  .mac-title {
+    position: static;
+    left: auto;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    margin-inline: 0.7rem;
+    transform: none;
+    text-align: left;
+  }
+
+  .mac-dot {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .terminal-prompt {
+    height: 3rem;
+    padding-inline: 0.75rem;
+    font-size: 16px;
+  }
+
+  .terminal-status {
+    gap: 0.55rem;
+    padding-left: 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .terminal-log {
+    right: 0.5rem;
+    bottom: 5.85rem;
+    left: 0.5rem;
+    max-height: min(12rem, 34vh);
+    font-size: 0.78rem;
+  }
+}
+
 .terminal-prompt {
   position: fixed;
   right: 0;

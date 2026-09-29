@@ -48,12 +48,12 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="section-shell min-h-screen px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+    <main className="section-shell min-h-screen px-4 pb-28 pt-24 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36">
       <div className="relative mx-auto max-w-7xl">
         <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
             <span className="eyebrow">Journal</span>
-            <h1 className="section-title mt-6 max-w-[12ch] text-5xl font-semibold leading-[0.92] text-[color:var(--text)] sm:text-6xl lg:text-7xl">
+            <h1 className="section-title mt-6 max-w-[16ch] text-4xl font-semibold leading-[0.95] text-[color:var(--text)] sm:max-w-[12ch] sm:text-6xl sm:leading-[0.92] lg:text-7xl">
               Writing on engineering, AI, leadership, and discipline.
             </h1>
             <p className="mt-7 max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">

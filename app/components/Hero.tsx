@@ -54,7 +54,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="section-shell relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-36 sm:px-6 lg:px-8"
+      className="section-shell relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-24 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36"
     >
       <div className="absolute inset-0">
         <FloatingOrb className="absolute left-[12%] top-28 h-72 w-72 rounded-full bg-[color:var(--accent)]/10 blur-3xl" />
@@ -88,7 +88,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="text-sm uppercase tracking-[0.28em] text-[color:var(--accent)] sm:text-base"
+              className="text-xs uppercase tracking-[0.12em] text-[color:var(--accent)] sm:text-base sm:tracking-[0.28em]"
             >
               {identityLines[activeIdentity]}
             </motion.p>
@@ -96,26 +96,26 @@ export default function Hero() {
           <h1 className="section-title mt-4 max-w-[18ch] text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-[color:var(--text)] sm:text-5xl lg:text-6xl">
             <TypewriterText text="Systems, built with standards." />
           </h1>
-          <p className="mt-7 max-w-[34rem] text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+          <p className="mt-5 max-w-[34rem] text-base leading-7 text-[color:var(--muted)] sm:mt-7 sm:text-lg sm:leading-8">
             Computer science student, engineering graduate, swimmer, and student leader bringing
             calm execution and high standards to every system I build.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
             {proofPoints.map((point, index) => (
               <motion.span
                 key={point}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index + 0.5, duration: 0.4 }}
-                className="rounded-full border border-[color:var(--border)] bg-white/5 px-4 py-2 text-sm text-[color:var(--text)]"
+                className="border border-[color:var(--border)] bg-white/5 px-3 py-1.5 text-sm text-[color:var(--text)] sm:px-4 sm:py-2"
               >
                 {point}
               </motion.span>
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-6 flex flex-wrap gap-3 sm:mt-10">
             <MagneticButton className="inline-flex">
               <Button
                 onClick={() => scrollToSection('projects')}

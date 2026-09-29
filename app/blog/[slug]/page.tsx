@@ -48,12 +48,12 @@ export default async function BlogArticlePage({ params }: Params) {
   }
 
   return (
-    <main className="section-shell min-h-screen px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+    <main className="section-shell min-h-screen px-4 pb-28 pt-24 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36">
       <div className="relative mx-auto max-w-5xl">
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.76fr)] lg:items-start">
           <div>
             <span className="eyebrow">{article.type}</span>
-            <h1 className="section-title mt-6 max-w-[13ch] text-5xl font-semibold leading-[0.94] text-[color:var(--text)] sm:text-6xl">
+            <h1 className="section-title mt-6 max-w-[16ch] text-4xl font-semibold leading-[0.95] text-[color:var(--text)] sm:max-w-[13ch] sm:text-6xl sm:leading-[0.94]">
               {article.title}
             </h1>
             <p className="mt-6 text-sm uppercase tracking-[0.22em] text-[color:var(--muted)]">

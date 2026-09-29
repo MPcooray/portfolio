@@ -234,7 +234,8 @@ export default function PortfolioShell() {
       )}
       <form className="terminal-prompt" onSubmit={onSubmit}>
         <label className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="shrink-0 text-[color:var(--accent)]">{prompt}</span>
+          <span className="shrink-0 text-[color:var(--accent)] sm:hidden">{cwd}$</span>
+          <span className="hidden shrink-0 text-[color:var(--accent)] sm:inline">{prompt}</span>
           <input
             ref={inputRef}
             value={input}
